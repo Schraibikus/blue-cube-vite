@@ -1,0 +1,64 @@
+.container {
+  position: relative;
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--brand-light-3);
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 32px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--brand-light-2);
+
+    &__navigation {
+      display: flex;
+      gap: 16px;
+
+      &_link {
+        line-height: 24px;
+        color: var(--black);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--brand);
+        }
+
+        &_active {
+          text-decoration: underline;
+          text-decoration-thickness: 3px;
+          text-underline-offset: 8px;
+          color: var(--brand);
+        }
+      }
+    }
+
+    &__cart {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 24px;
+      color: var(--black);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--brand);
+      }
+
+      &_active {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 24px;
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
+        text-underline-offset: 8px;
+        color: var(--brand);
+      }
+    }
+  }
+}

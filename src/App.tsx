@@ -1,25 +1,23 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import s from "./app.module.scss";
+import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-// import { HeaderBar } from "./components/HeaderBar";
 import { MainPage } from "./pages/Main";
 import { NotFoundPage } from "./pages/NotFound/NotFoundPage";
 import { ProductsPage } from "./pages/Products";
 import { OrdersPage } from "./pages/Orders";
 import { CartPage } from "./pages/Cart";
+import { SingleProductPage } from "./pages/Products/SingleProduct";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route index element={<MainPage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/orders" element={<OrdersPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />} />
+      <Route index element={<MainPage />} />
+      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/products/:productId" element={<SingleProductPage />} />
+      <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/cart" element={<CartPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 

@@ -1,9 +1,76 @@
+import { useEffect } from "react";
 import { Layout } from "../../components/Layout";
+import { Pagination } from "../../components/Pagination/Pagination";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { fetchItems } from "../../store/itemsSlice";
+import styles from "./ProductsPage.module.scss";
+import truncateText from "../../utils/truncateText";
+import { useNavigate } from "react-router-dom";
+import replaceImage from "../../utils/replaceImage";
 
 export const ProductsPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const paginationPage = useAppSelector((state) => state.pagination.pagination);
+  const items = useAppSelector((state) => state.items.itemsList);
+  const isLoading = useAppSelector((state) => state.items.isLoading);
+  const error = useAppSelector((state) => state.items.error);
+
+  useEffect(() => {
+    dispatch(fetchItems(paginationPage));
+  }, [dispatch, paginationPage]);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className={styles.loading}>... loading ...</div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <div>Товары</div>
+      <div className={styles.products}>
+        {items.length ? (
+          items.map((elem) => (
+            <div
+              key={elem.id}
+              className={styles.card}
+              data-id={elem.id} //убрать на финале - нужно только для отладки
+              onClick={() => {
+                navigate(`/products/${elem.id}`);
+              }}
+            >
+              <img
+                src={elem.picture}
+                alt={truncateText(elem.title, 2)}
+                width={250}
+                height={250}
+                onError={replaceImage}
+              />
+              <div className={styles.card__title}>{elem.title}</div>
+              <div className={styles.card__rating}>
+                {[...Array(5)].map((_, i) => (
+                  <span
+                    key={i}
+                    className={
+                      i < elem.rating
+                        ? `${styles.card__rating_starFilled}`
+                        : `${styles.card__rating_starEmpty}`
+                    }
+                  >
+                    &#9733;
+                  </span>
+                ))}
+              </div>
+              <div className={styles.card__price}>{elem.price} &#8381;</div>
+            </div>
+          ))
+        ) : (
+          <div>{error}</div>
+        )}
+      </div>
+      <Pagination />
     </Layout>
   );
 };

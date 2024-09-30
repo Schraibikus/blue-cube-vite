@@ -1,8 +1,9 @@
+import { useAppSelector } from "../../hooks/redux";
 import styles from "./HeaderBar.module.scss";
 import { Link, NavLink } from "react-router-dom";
 
 export const HeaderBar = (): JSX.Element => {
-  const cartCount = 0;
+  const cartCount = useAppSelector((state) => state.cart.cartItems.length);
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -37,7 +38,6 @@ export const HeaderBar = (): JSX.Element => {
             isActive ? styles.header__cart_active : styles.header__cart
           }
         >
-          {/* <img src="/svg/cart.svg" alt="cart" width={20} height={20} /> */}
           <svg
             width="20"
             height="20"

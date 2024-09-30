@@ -4,6 +4,7 @@ import replaceImage from "../../utils/replaceImage";
 import styles from "./CartPage.module.scss";
 import axios from "axios";
 import { Item } from "../../store/itemsSlice";
+import { useAppSelector } from "../../hooks/redux";
 
 export type CartItem = {
   product: Item;
@@ -11,27 +12,27 @@ export type CartItem = {
 };
 
 export const CartPage = () => {
-  // const cart = useAppSelector((state) => state.cart.cartItems);
+  const cart = useAppSelector((state) => state.cart.cartItems);
   // console.log("cart in Cart: ", cart);
   // const dispatch = useAppDispatch();
 
-  const [cart, setCart] = useState<CartItem[]>([]);
+  // const [cart, setCart] = useState<CartItem[]>([]);
 
-  const API_URL = "https://skillfactory-task.detmir.team/cart";
+  // const API_URL = "https://skillfactory-task.detmir.team/cart";
 
-  useEffect(() => {
-    async function getProducts() {
-      try {
-        const { data } = await axios.get(API_URL);
-        setCart(data);
-        console.log(data);
-      } catch (error) {
-        alert("Ошибка при запросе данных ;(");
-        console.error(error);
-      }
-    }
-    getProducts();
-  }, []);
+  // useEffect(() => {
+  //   async function getProducts() {
+  //     try {
+  //       const { data } = await axios.get(API_URL);
+  //       setCart(data);
+  //       console.log(data);
+  //     } catch (error) {
+  //       alert("Ошибка при запросе данных ;(");
+  //       console.error(error);
+  //     }
+  //   }
+  //   getProducts();
+  // }, []);
 
   const totalPrice = cart
     .flat()

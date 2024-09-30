@@ -4,16 +4,18 @@ import DOMPurify from "dompurify";
 import { Layout } from "../../../components/Layout";
 import { Link, useParams } from "react-router-dom";
 import styles from "./SingleProductPage.module.scss";
-import { useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
+import { addCartItem } from "../../../store/cartSlice";
 export const SingleProductPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
-  // const addToOrder = (id: string, quantity: number) => {
-  //   setIsOpen(false);
-  //   dispatch(addCartItem({ id, quantity }));
-  // };
+  const dispatch = useAppDispatch();
+  const addToOrder = (id: string, quantity: number) => {
+    setIsOpen(false);
+    dispatch(addCartItem({ id, quantity }));
+  };
 
   const { productId } = useParams();
   const itemsList = useAppSelector((state) => state.items.itemsList);
@@ -124,7 +126,7 @@ export const SingleProductPage = () => {
                   <button
                     type="button"
                     className={styles.product__button_order}
-                    // onClick={() => addToOrder(singleProduct.id, quantity)}
+                    onClick={() => addToOrder(productId, quantity)}
                     disabled={quantity === 0 || quantity > 10}
                   >
                     Оформить заказ

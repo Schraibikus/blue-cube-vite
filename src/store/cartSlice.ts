@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Item } from "./itemsSlice";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
+import { Item } from "./modules/items/types";
 
 export type CartItem = {
   product: Item;

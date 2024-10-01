@@ -3,7 +3,8 @@ import styles from "./HeaderBar.module.scss";
 import { Link, NavLink } from "react-router-dom";
 
 export const HeaderBar = (): JSX.Element => {
-  const cartCount = useAppSelector((state) => state.cart.cartItems.length);
+  const cartCount = useAppSelector((state) => state.cart.itemsToCart.length);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>

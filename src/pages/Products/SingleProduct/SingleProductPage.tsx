@@ -6,19 +6,21 @@ import { Link, useParams } from "react-router-dom";
 import styles from "./SingleProductPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
-import { addCartItem } from "../../../store/cartSlice";
+import { addToCartItems } from "../../../store/modules/cart/cartSlice";
+
 export const SingleProductPage = () => {
+  const dispatch = useAppDispatch();
+  const { productId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
-
-  const dispatch = useAppDispatch();
-  const addToOrder = (id: string, quantity: number) => {
-    setIsOpen(false);
-    dispatch(addCartItem({ id, quantity }));
-  };
-
-  const { productId } = useParams();
   const itemsList = useAppSelector((state) => state.items.itemsList);
+
+  // const itemsToCart = useAppSelector((state) => state.cart.itemsToCart);
+  // console.log("itemToCart", itemsToCart);
+
+  const addToCart = (id: string, quantity: number) => {
+    dispatch(addToCartItems({ id, quantity }));
+  };
 
   const getSingleProduct = (productId: string) => {
     const singleProduct = itemsList.find((item) => item.id === productId);
@@ -73,6 +75,7 @@ export const SingleProductPage = () => {
                 <button
                   type="button"
                   className={styles.product__button}
+                  // onClick={() => addToCart(productId ?? "", quantity)}
                   onClick={() => setIsOpen(true)}
                 >
                   Добавить в корзину
@@ -126,7 +129,7 @@ export const SingleProductPage = () => {
                   <button
                     type="button"
                     className={styles.product__button_order}
-                    onClick={() => addToOrder(productId, quantity)}
+                    onClick={() => addToCart(productId ?? "", quantity)}
                     disabled={quantity === 0 || quantity > 10}
                   >
                     Оформить заказ

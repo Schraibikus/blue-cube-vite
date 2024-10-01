@@ -1,16 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { getItems } from "./";
-
-export type Item = {
-  id: string;
-  category: string;
-  title: string;
-  description: string;
-  picture: string;
-  rating: number;
-  price: number;
-};
+import { Item } from "./types";
 
 type ItemsState = {
   itemsList: Item[];

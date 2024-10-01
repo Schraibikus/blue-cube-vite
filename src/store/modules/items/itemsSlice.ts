@@ -36,7 +36,9 @@ const itemsSlice = createSlice({
       })
       .addCase(getItems.fulfilled, (state, action: PayloadAction<Item[]>) => {
         state.isLoading = false;
-        state.itemsList = action.payload;
+        if (Array.isArray(action.payload)) {
+          state.itemsList = action.payload;
+        }
       })
       .addCase(getItems.rejected, (state, action) => {
         state.isLoading = false;

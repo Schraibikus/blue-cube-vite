@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { Layout } from "../../components/Layout";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchItems } from "../../store/itemsSlice";
 import styles from "./ProductsPage.module.scss";
 import truncateText from "../../utils/truncateText";
 import { useNavigate } from "react-router-dom";
 import replaceImage from "../../utils/replaceImage";
+import { getItems } from "../../store/modules/items";
 
 export const ProductsPage = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const ProductsPage = () => {
   const error = useAppSelector((state) => state.items.error);
 
   useEffect(() => {
-    dispatch(fetchItems(paginationPage));
+    dispatch(getItems(paginationPage));
   }, [dispatch, paginationPage]);
 
   if (isLoading) {

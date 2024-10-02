@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import { addItemCart } from "../../store/modules/cart";
 import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
 import { submitAllItemsCart } from "../../store/modules/cart/thunk";
+import { useNavigate } from "react-router-dom";
 
 export const CartPage = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart.cartItems);
   const isLoading = useAppSelector((state) => state.cart.isLoading);
@@ -25,6 +27,7 @@ export const CartPage = () => {
 
   const handleOrder = () => {
     dispatch(submitAllItemsCart());
+    navigate("/products");
   };
 
   // useEffect(() => {

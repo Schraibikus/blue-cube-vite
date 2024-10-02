@@ -2,13 +2,14 @@ import { useState } from "react";
 import DOMPurify from "dompurify";
 
 import { Layout } from "../../../components/Layout";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./SingleProductPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
 import { addToCartItems } from "../../../store/modules/cart/cartSlice";
 
 export const SingleProductPage = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { productId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,11 @@ export const SingleProductPage = () => {
 
   const addToCart = (id: string, quantity: number) => {
     dispatch(addToCartItems({ id, quantity }));
+  };
+
+  const handleAddToCart = () => {
+    addToCart(productId ?? "", quantity);
+    navigate("/products");
   };
 
   const getSingleProduct = (productId: string) => {
@@ -129,7 +135,8 @@ export const SingleProductPage = () => {
                   <button
                     type="button"
                     className={styles.product__button_order}
-                    onClick={() => addToCart(productId ?? "", quantity)}
+                    // onClick={() => addToCart(productId ?? "", quantity)}
+                    onClick={() => handleAddToCart()}
                     disabled={quantity === 0 || quantity > 10}
                   >
                     Оформить заказ

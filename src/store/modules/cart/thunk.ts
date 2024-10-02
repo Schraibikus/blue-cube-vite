@@ -31,7 +31,7 @@ export const submitAllItemsCart = createAsyncThunk(
   async () => {
     try {
       const data = await submitItemsCart();
-      console.log("submitItemsCart addItemCart: ", data);
+      // console.log("submitItemsCart addItemCart: ", data);
       return data;
     } catch (error) {
       if (error instanceof AxiosError) return error.message;

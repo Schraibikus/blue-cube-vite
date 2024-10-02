@@ -15,6 +15,6 @@ export const fetchAddItemCart = async (
 
 export const submitItemsCart = async () => {
   const { data } = await api.post(`cart/submit`);
-  console.log("submitAddItemCart apis", data);
+  // console.log("submitAddItemCart apis", data);
   return data;
 };

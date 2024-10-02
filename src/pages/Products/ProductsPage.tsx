@@ -36,7 +36,6 @@ export const ProductsPage = () => {
             <div
               key={elem.id}
               className={styles.card}
-              data-id={elem.id} //убрать на финале - нужно только для отладки
               onClick={() => {
                 navigate(`/products/${elem.id}`);
               }}
@@ -46,7 +45,7 @@ export const ProductsPage = () => {
                 alt={truncateText(elem.title, 2)}
                 width={250}
                 height={250}
-                onError={replaceImage}
+                onError={(e) => replaceImage(e)}
               />
               <div className={styles.card__title}>{elem.title}</div>
               <div className={styles.card__rating}>

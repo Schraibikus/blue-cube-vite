@@ -1,42 +1,54 @@
-import { useEffect, useState } from "react";
 import { Layout } from "../../components/Layout";
 import replaceImage from "../../utils/replaceImage";
 import styles from "./CartPage.module.scss";
-import axios from "axios";
-import { Item } from "../../store/itemsSlice";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useEffect } from "react";
 
-export type CartItem = {
-  product: Item;
-  quantity: number;
-};
+import { addItemCart } from "../../store/modules/cart";
+import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
+import { submitAllItemsCart } from "../../store/modules/cart/thunk";
+import { useNavigate } from "react-router-dom";
 
 export const CartPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart.cartItems);
-  // console.log("cart in Cart: ", cart);
-  // const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.cart.isLoading);
+  const error = useAppSelector((state) => state.cart.error);
+  const itemInCart = useAppSelector((state) => state.cart.itemsToCart);
 
-  // const [cart, setCart] = useState<CartItem[]>([]);
+  const handleQuantityChange = (id: string, quantity: number) => {
+    dispatch(updateQuantity({ id, quantity }));
+  };
 
-  // const API_URL = "https://skillfactory-task.detmir.team/cart";
+  const handleRemoveItem = (id: string) => {
+    dispatch(removeItem({ id }));
+  };
+
+  const handleOrder = () => {
+    dispatch(submitAllItemsCart());
+    navigate("/products");
+  };
 
   // useEffect(() => {
-  //   async function getProducts() {
-  //     try {
-  //       const { data } = await axios.get(API_URL);
-  //       setCart(data);
-  //       console.log(data);
-  //     } catch (error) {
-  //       alert("Ошибка при запросе данных ;(");
-  //       console.error(error);
-  //     }
-  //   }
-  //   getProducts();
+  //   getItemsCart();
   // }, []);
+
+  useEffect(() => {
+    dispatch(addItemCart(itemInCart));
+  }, [dispatch, itemInCart]);
 
   const totalPrice = cart
     .flat()
     .reduce((sum, obj) => obj.product.price * obj.quantity + sum, 0);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className={styles.loading}>... loading ...</div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -56,15 +68,10 @@ export const CartPage = () => {
                 <button
                   type="button"
                   className={styles.cart__item_ordersBlock_btn}
-                  // onClick={() =>
-                  //   dispatch(
-                  //     updateQuantity({
-                  //       id: item.product.id,
-                  //       quantity: item.quantity - 1,
-                  //     })
-                  //   )
-                  // }
-                  // disabled={quantity === 0}
+                  onClick={() =>
+                    handleQuantityChange(item.product.id, item.quantity - 1)
+                  }
+                  disabled={item.quantity === 0}
                 >
                   <svg
                     width="14"
@@ -85,15 +92,10 @@ export const CartPage = () => {
                 <button
                   type="button"
                   className={styles.cart__item_ordersBlock_btn}
-                  // onClick={() =>
-                  //   dispatch(
-                  //     updateQuantity({
-                  //       id: item.product.id,
-                  //       quantity: item.quantity + 1,
-                  //     })
-                  //   )
-                  // }
-                  // disabled={quantity === 10}
+                  onClick={() =>
+                    handleQuantityChange(item.product.id, item.quantity + 1)
+                  }
+                  disabled={item.quantity === 10}
                 >
                   <svg
                     width="14"
@@ -110,7 +112,10 @@ export const CartPage = () => {
                 </button>
               </div>
               {item.quantity === 0 && (
-                <p className={styles.cart__item_delete}>
+                <p
+                  className={styles.cart__item_delete}
+                  onClick={() => handleRemoveItem(item.product.id)}
+                >
                   <svg
                     width="18"
                     height="18"
@@ -152,13 +157,14 @@ export const CartPage = () => {
           <button
             type="button"
             className={styles.cart__button}
+            onClick={() => handleOrder()}
             disabled={totalPrice === 0}
           >
             Оформить заказ
           </button>
         </div>
       ) : (
-        <p>Cart is empty</p>
+        <div>{error}Cart is empty or error load</div>
       )}
     </Layout>
   );

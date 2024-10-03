@@ -47,6 +47,7 @@ export const ProductsPage = () => {
                 height={250}
                 onError={(e) => replaceImage(e)}
               />
+
               <div className={styles.card__title}>{elem.title}</div>
               <div className={styles.card__rating}>
                 {[...Array(5)].map((_, i) => (

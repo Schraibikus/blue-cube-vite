@@ -9,12 +9,17 @@ export const fetchGetItemsCart = async () => {
 export const fetchAddItemCart = async (
   itemsToCart: { id: Item["id"]; quantity: number }[]
 ) => {
-  const { data } = await api.post(`cart/update`, { data: itemsToCart });
+  const { data } = await api.post(
+    `cart/update`,
+    { data: itemsToCart },
+    {
+      withCredentials: true,
+    }
+  );
   return data;
 };
 
-export const submitItemsCart = async () => {
-  const { data } = await api.post(`cart/submit`);
-  // console.log("submitAddItemCart apis", data);
+export const submitAddItemCart = async () => {
+  const { data } = await api.post(`cart/submit`, {}, { withCredentials: true });
   return data;
 };

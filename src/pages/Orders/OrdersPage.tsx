@@ -1,28 +1,27 @@
 import { Layout } from "../../components/Layout";
-import { useAppSelector } from "../../hooks/redux";
-import { api } from "../../store/axios";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useEffect } from "react";
+import { getOrders } from "../../store/modules/orders";
 import { SingleOrderPage } from "./SingleOrder";
+import styles from "./OrdersPage.module.scss";
 
 export const OrdersPage = () => {
-  // const dispatch = useAppDispatch();
-  const orders = useAppSelector((state) => state.cart.cartItems);
-  console.log("orders", orders);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector((state) => state.orders.orders);
 
-  const getOrders = async () => {
-    const { data } = await api.get(`orders?limit=10&page=1`);
-    console.log("getOrders", data);
-    return data;
-  };
+  useEffect(() => {
+    dispatch(getOrders());
+  }, [dispatch]);
 
   return (
     <Layout>
-      <button onClick={() => getOrders()}>getOrders</button>
       {orders.length ? (
-        orders.map((elem) => (
-          <div key={elem.product.id}>
-            <SingleOrderPage />
-          </div>
-        ))
+        <section className={styles.container}>
+          <div>заказов {orders.length}</div>
+          {orders.map((order, idx) => (
+            <SingleOrderPage key={idx} order={order} />
+          ))}
+        </section>
       ) : (
         <div>Заказов нет</div>
       )}

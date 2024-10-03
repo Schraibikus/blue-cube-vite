@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Item } from "../items/types";
-import { addItemCart, getItemsCart, submitAllItemsCart } from "./thunk";
+import { addItemCart, clearCart, getItemsCart, submitCart } from "./thunk";
 import dayjs from "dayjs";
 
 export type CartItem = {
@@ -92,8 +92,25 @@ const cartSlice = createSlice({
           state.cartItems = action.payload;
         }
       )
-      .addCase(submitAllItemsCart.fulfilled, (state, action) => {
-        state.cartItems = action.payload;
+      .addCase(clearCart.fulfilled, (state) => {
+        // state.cartItems = [];
+        state.itemsToCart = [];
+      })
+      .addCase(submitCart.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        submitCart.fulfilled,
+        (state, action: PayloadAction<CartItem[]>) => {
+          console.log("payload", action.payload);
+          state.isLoading = false;
+          state.cartItems = action.payload;
+        }
+      )
+      .addCase(submitCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Failed to fetch cartItems";
       });
   },
 });

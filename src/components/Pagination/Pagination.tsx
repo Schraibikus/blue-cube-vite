@@ -1,14 +1,15 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from "./Pagination.module.scss";
-import { LIMIT_PAGES } from "../../utils/constants";
 import {
   currentPage,
   nextPage,
 } from "../../store/modules/pagination/paginationSlice";
 
 export const Pagination = () => {
+  const limitPages = 14;
   const dispatch = useAppDispatch();
   const paginationPage = useAppSelector((state) => state.pagination.pagination);
+
   const nextPages = () => {
     dispatch(nextPage(1));
   };
@@ -19,7 +20,7 @@ export const Pagination = () => {
 
   function createButtons() {
     const buttons = [];
-    for (let i = 0; i < LIMIT_PAGES; i++) {
+    for (let i = 0; i < limitPages; i++) {
       buttons.push(
         <button
           key={i}
@@ -57,10 +58,11 @@ export const Pagination = () => {
         />
       </button>
       {createButtons()}
+
       <button
         className={styles.pagination__button}
         type="button"
-        disabled={paginationPage === LIMIT_PAGES}
+        disabled={paginationPage === limitPages}
         onClick={() => nextPages()}
       >
         <img

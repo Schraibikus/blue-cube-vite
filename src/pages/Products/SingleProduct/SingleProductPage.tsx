@@ -16,9 +16,6 @@ export const SingleProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const itemsList = useAppSelector((state) => state.items.itemsList);
 
-  // const itemsToCart = useAppSelector((state) => state.cart.itemsToCart);
-  // console.log("itemToCart", itemsToCart);
-
   const addToCart = (id: string, quantity: number) => {
     dispatch(addToCartItems({ id, quantity }));
   };

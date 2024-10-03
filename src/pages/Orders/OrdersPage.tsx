@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import { getOrders } from "../../store/modules/orders";
 import { SingleOrderPage } from "./SingleOrder";
 import styles from "./OrdersPage.module.scss";
+import { CartItem } from "../../store/modules/cart/cartSlice";
 
 export const OrdersPage = () => {
   const dispatch = useAppDispatch();
   const orders = useAppSelector((state) => state.orders.orders);
+  console.log("orders", orders);
 
   useEffect(() => {
     dispatch(getOrders());
@@ -18,8 +20,8 @@ export const OrdersPage = () => {
       {orders.length ? (
         <section className={styles.container}>
           <div>заказов {orders.length}</div>
-          {orders.map((order, idx) => (
-            <SingleOrderPage key={idx} order={order} />
+          {orders.map((order: CartItem, idx: number) => (
+            <SingleOrderPage key={idx} order={order} idx={idx} />
           ))}
         </section>
       ) : (

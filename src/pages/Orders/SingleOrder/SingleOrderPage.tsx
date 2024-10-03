@@ -1,38 +1,58 @@
 import { useNavigate } from "react-router-dom";
-import { Layout } from "../../../components/Layout";
 import formatDate from "../../../utils/formatDate";
 import styles from "./SingleOrderPage.module.scss";
+import { CartItem } from "../../../store/modules/cart/cartSlice";
 
-export const SingleOrderPage = (props) => {
-  const { order } = props;
+export const SingleOrderPage = ({
+  order,
+  idx,
+}: {
+  order: CartItem | CartItem[];
+  idx: number;
+}) => {
+  // const { order, idx } = props;
   const navigate = useNavigate();
 
-  const totalPrice = order
-    ?.flat()
-    .reduce(
-      (sum: number, obj: { product: { price: number }; quantity: number }) =>
-        obj.product.price * obj.quantity + sum,
-      0
-    );
+  const totalPrice =
+    Array.isArray(order) &&
+    order
+      ?.flat()
+      .reduce(
+        (sum: number, obj: { product: { price: number }; quantity: number }) =>
+          obj.product.price * obj.quantity + sum,
+        0
+      );
   return (
     <section className={styles.container}>
       <div className={styles.order}>
         <div className={styles.order__info}>
           <p className={styles.order__info_title}>Заказ</p>
-          <p className={styles.order__info_number}>№ 344312</p>
+          <p className={styles.order__info_number}>{idx + 1}</p>
         </div>
         <div className={styles.order__images}>
-          {order?.map((elem) => (
+          {Array.isArray(order) ? (
+            order.map((elem: { product: { id: string; picture: string } }) => (
+              <img
+                key={elem.product.id}
+                className={styles.order__images_item}
+                onClick={() => navigate(`/products/${elem.product.id}`)}
+                src={elem.product.picture}
+                alt="empty"
+                width={48}
+                height={48}
+              />
+            ))
+          ) : (
             <img
-              key={elem.product.id}
+              key={order.product.id}
               className={styles.order__images_item}
-              onClick={() => navigate(`/products/${elem.product.id}`)}
-              src={elem.product.picture}
+              onClick={() => navigate(`/products/${order.product.id}`)}
+              src={order.product.picture}
               alt="empty"
               width={48}
               height={48}
             />
-          ))}
+          )}
         </div>
       </div>
       <div className={styles.info}>
@@ -41,7 +61,11 @@ export const SingleOrderPage = (props) => {
           <p>На сумму</p>
         </div>
         <div className={styles.info__desc}>
-          <p>{formatDate(order[0]?.createdAt)} г</p>
+          {Array.isArray(order) ? (
+            <p>{formatDate(order[0]?.createdAt)} г</p>
+          ) : (
+            <p>{formatDate(order?.createdAt)} г</p>
+          )}
           <p>{totalPrice} &#8381;</p>
         </div>
       </div>

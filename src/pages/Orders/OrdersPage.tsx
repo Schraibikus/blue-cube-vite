@@ -9,7 +9,6 @@ import { CartItem } from "../../store/modules/cart/cartSlice";
 export const OrdersPage = () => {
   const dispatch = useAppDispatch();
   const orders = useAppSelector((state) => state.orders.orders);
-  console.log("orders", orders);
 
   useEffect(() => {
     dispatch(getOrders());

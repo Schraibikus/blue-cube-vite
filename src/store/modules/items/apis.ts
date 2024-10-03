@@ -7,3 +7,10 @@ export const fetchGetItems = async (page: number) => {
   });
   return data;
 };
+
+export const fetchGetOneItem = async (productId: string) => {
+  const { data } = await api.get(`products/${productId}`, {
+    withCredentials: true,
+  });
+  return data;
+};

@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import formatDate from "../../../utils/formatDate";
 import styles from "./SingleOrderPage.module.scss";
 import { CartItem } from "../../../store/modules/cart/cartSlice";
+import { useAppDispatch } from "../../../hooks/redux";
+import { getItem } from "../../../store/modules/items";
 
 export const SingleOrderPage = ({
   order,
@@ -10,8 +12,13 @@ export const SingleOrderPage = ({
   order: CartItem | CartItem[];
   idx: number;
 }) => {
-  // const { order, idx } = props;
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const getTargetItem = (id: string) => {
+    dispatch(getItem(id));
+    navigate(`/products/${id}`);
+  };
 
   const totalPrice =
     Array.isArray(order) &&
@@ -35,7 +42,7 @@ export const SingleOrderPage = ({
               <img
                 key={elem.product.id}
                 className={styles.order__images_item}
-                onClick={() => navigate(`/products/${elem.product.id}`)}
+                onClick={() => getTargetItem(elem.product.id)}
                 src={elem.product.picture}
                 alt="empty"
                 width={48}
@@ -46,7 +53,7 @@ export const SingleOrderPage = ({
             <img
               key={order.product.id}
               className={styles.order__images_item}
-              onClick={() => navigate(`/products/${order.product.id}`)}
+              onClick={() => getTargetItem(order.product.id)}
               src={order.product.picture}
               alt="empty"
               width={48}

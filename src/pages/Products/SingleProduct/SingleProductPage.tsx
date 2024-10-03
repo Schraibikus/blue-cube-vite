@@ -14,7 +14,8 @@ export const SingleProductPage = () => {
   const { productId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const itemsList = useAppSelector((state) => state.items.itemsList);
+
+  const item = useAppSelector((state) => state.items.item);
 
   const addToCart = (id: string, quantity: number) => {
     dispatch(addToCartItems({ id, quantity }));
@@ -24,15 +25,6 @@ export const SingleProductPage = () => {
     addToCart(productId ?? "", quantity);
     navigate("/products");
   };
-
-  const getSingleProduct = (productId: string) => {
-    const singleProduct = itemsList.find((item) => item.id === productId);
-    return singleProduct ?? {};
-  };
-
-  const { title, picture, description, price, rating } = getSingleProduct(
-    productId ?? ""
-  );
 
   return (
     <Layout>
@@ -48,21 +40,21 @@ export const SingleProductPage = () => {
         </Link>
         <div className={styles.product__top}>
           <img
-            src={picture}
+            src={item.picture}
             width={374}
             height={374}
-            alt={title}
+            alt={item.title}
             onError={replaceImage}
           />
           <div className={styles.product__top_right}>
             <div>
-              <h1 className={styles.product__title}>{title}</h1>
+              <h1 className={styles.product__title}>{item.title}</h1>
               <div className={styles.product__rating}>
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
                     className={
-                      i < rating
+                      i < item.rating
                         ? `${styles.product__rating_starFilled}`
                         : `${styles.product__rating_starEmpty}`
                     }
@@ -73,7 +65,7 @@ export const SingleProductPage = () => {
               </div>
             </div>
             <div>
-              <div className={styles.product__price}>{price} &#8381;</div>
+              <div className={styles.product__price}>{item.price} &#8381;</div>
               {!isOpen && (
                 <button
                   type="button"
@@ -165,7 +157,7 @@ export const SingleProductPage = () => {
           <h3>Описание</h3>
           <div
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(description),
+              __html: DOMPurify.sanitize(item.description),
             }}
           ></div>
         </div>

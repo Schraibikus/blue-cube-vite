@@ -4,17 +4,23 @@ import { Pagination } from "../../components/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from "./ProductsPage.module.scss";
 import truncateText from "../../utils/truncateText";
-import { useNavigate } from "react-router-dom";
 import replaceImage from "../../utils/replaceImage";
 import { getItems } from "../../store/modules/items";
+import { getItem } from "../../store/modules/items";
+import { useNavigate } from "react-router-dom";
 
 export const ProductsPage = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const paginationPage = useAppSelector((state) => state.pagination.pagination);
   const items = useAppSelector((state) => state.items.itemsList);
   const isLoading = useAppSelector((state) => state.items.isLoading);
   const error = useAppSelector((state) => state.items.error);
+
+  const getTargetItem = (id: string) => {
+    dispatch(getItem(id));
+    navigate(`/products/${id}`);
+  };
 
   useEffect(() => {
     dispatch(getItems(paginationPage));
@@ -37,7 +43,7 @@ export const ProductsPage = () => {
               key={elem.id}
               className={styles.card}
               onClick={() => {
-                navigate(`/products/${elem.id}`);
+                getTargetItem(elem.id);
               }}
             >
               <img

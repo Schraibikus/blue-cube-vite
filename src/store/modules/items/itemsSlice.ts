@@ -1,15 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { getItems } from "./";
+import { getItem, getItems } from "./";
 import { Item } from "./types";
 
 type ItemsState = {
+  item: Item;
   itemsList: Item[];
   isLoading: boolean;
   error: string | null;
 };
 
 const initialState: ItemsState = {
+  item: {
+    id: "",
+    category: "",
+    title: "",
+    description: "",
+    picture: "",
+    rating: 0,
+    price: 0,
+  },
   itemsList: [],
   isLoading: false,
   error: null,
@@ -34,6 +44,9 @@ const itemsSlice = createSlice({
       .addCase(getItems.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch items";
+      })
+      .addCase(getItem.fulfilled, (state, action: PayloadAction<Item>) => {
+        state.item = action.payload;
       });
   },
 });

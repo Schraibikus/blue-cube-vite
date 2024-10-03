@@ -6,16 +6,18 @@ import { useEffect } from "react";
 
 import { addItemCart } from "../../store/modules/cart";
 import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
-import { submitAllItemsCart } from "../../store/modules/cart/thunk";
 import { useNavigate } from "react-router-dom";
+import { clearCart, submitCart } from "../../store/modules/cart";
 
 export const CartPage = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const cart = useAppSelector((state) => state.cart.cartItems);
   const isLoading = useAppSelector((state) => state.cart.isLoading);
   const error = useAppSelector((state) => state.cart.error);
   const itemInCart = useAppSelector((state) => state.cart.itemsToCart);
+
+  // const quentityItem = useAppSelector((state) => state.cart.updateQuantity);
 
   const handleQuantityChange = (id: string, quantity: number) => {
     dispatch(updateQuantity({ id, quantity }));
@@ -25,21 +27,19 @@ export const CartPage = () => {
     dispatch(removeItem({ id }));
   };
 
-  const handleOrder = () => {
-    dispatch(submitAllItemsCart());
+  const handleOrder = async () => {
+    // dispatch(addItemCart(itemInCart));
+    await dispatch(submitCart());
+    await dispatch(clearCart());
     navigate("/products");
   };
-
-  // useEffect(() => {
-  //   getItemsCart();
-  // }, []);
 
   useEffect(() => {
     dispatch(addItemCart(itemInCart));
   }, [dispatch, itemInCart]);
 
   const totalPrice = cart
-    .flat()
+    ?.flat()
     .reduce((sum, obj) => obj.product.price * obj.quantity + sum, 0);
 
   if (isLoading) {

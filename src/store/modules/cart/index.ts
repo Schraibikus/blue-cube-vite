@@ -1,1 +1,1 @@
-export { getItemsCart, addItemCart } from "./thunk";
+export { getItemsCart, addItemCart, submitCart, clearCart } from "./thunk";

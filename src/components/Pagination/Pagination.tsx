@@ -58,7 +58,6 @@ export const Pagination = () => {
         />
       </button>
       {createButtons()}
-
       <button
         className={styles.pagination__button}
         type="button"

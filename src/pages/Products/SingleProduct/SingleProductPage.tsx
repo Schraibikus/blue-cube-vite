@@ -70,7 +70,6 @@ export const SingleProductPage = () => {
                 <button
                   type="button"
                   className={styles.product__button}
-                  // onClick={() => addToCart(productId ?? "", quantity)}
                   onClick={() => setIsOpen(true)}
                 >
                   Добавить в корзину

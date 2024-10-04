@@ -45,8 +45,17 @@ const itemsSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch items";
       })
+      .addCase(getItem.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(getItem.fulfilled, (state, action: PayloadAction<Item>) => {
+        state.isLoading = false;
         state.item = action.payload;
+      })
+      .addCase(getItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Failed to fetch item";
       });
   },
 });

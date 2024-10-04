@@ -57,5 +57,21 @@
     &__desc {
       color: var(--black);
     }
+
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand);
+      background-color: var(--brand-light-2);
+      border: none;
+      cursor: pointer;
+      height: 52px;
+      border-radius: 12px;
+
+      &:hover {
+        background-color: var(--brand-light-1);
+      }
+    }
   }
 }

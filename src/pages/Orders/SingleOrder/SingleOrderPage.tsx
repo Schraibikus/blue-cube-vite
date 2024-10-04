@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import formatDate from "../../../utils/formatDate";
 import styles from "./SingleOrderPage.module.scss";
-import { CartItem } from "../../../store/modules/cart/cartSlice";
+import {
+  addToCartItems,
+  CartItem,
+} from "../../../store/modules/cart/cartSlice";
 import { useAppDispatch } from "../../../hooks/redux";
 import { getItem } from "../../../store/modules/items";
 
@@ -18,6 +21,19 @@ export const SingleOrderPage = ({
   const getTargetItem = (id: string) => {
     dispatch(getItem(id));
     navigate(`/products/${id}`);
+  };
+
+  const handleRepeatOrder = () => {
+    if (Array.isArray(order)) {
+      order.forEach((item) => {
+        if (item.quantity > 0) {
+          dispatch(
+            addToCartItems({ id: item.product.id, quantity: item.quantity })
+          );
+        }
+      });
+    }
+    navigate("/cart");
   };
 
   const totalPrice =
@@ -63,6 +79,13 @@ export const SingleOrderPage = ({
         </div>
       </div>
       <div className={styles.info}>
+        <button
+          type="button"
+          className={styles.info__button}
+          onClick={handleRepeatOrder}
+        >
+          Повторить заказ
+        </button>
         <div className={styles.info__title}>
           <p>Оформлено</p>
           <p>На сумму</p>

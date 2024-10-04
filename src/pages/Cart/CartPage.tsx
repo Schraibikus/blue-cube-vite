@@ -5,7 +5,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useEffect } from "react";
 
 import { addItemCart } from "../../store/modules/cart";
-import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
+import {
+  addToCartItems,
+  removeItem,
+  updateQuantity,
+} from "../../store/modules/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart, submitCart } from "../../store/modules/cart";
 
@@ -17,8 +21,6 @@ export const CartPage = () => {
   const error = useAppSelector((state) => state.cart.error);
   const itemInCart = useAppSelector((state) => state.cart.itemsToCart);
 
-  // const quentityItem = useAppSelector((state) => state.cart.updateQuantity);
-
   const handleQuantityChange = (id: string, quantity: number) => {
     dispatch(updateQuantity({ id, quantity }));
   };
@@ -29,6 +31,14 @@ export const CartPage = () => {
 
   const handleOrder = async () => {
     // dispatch(addItemCart(itemInCart));
+    const cartItems = cart.filter((item) => item.quantity > 0);
+    cartItems.forEach((item) => {
+      if (item.quantity > 0) {
+        dispatch(
+          addToCartItems({ id: item.product.id, quantity: item.quantity })
+        );
+      }
+    });
     await dispatch(submitCart());
     await dispatch(clearCart());
     navigate("/products");
@@ -125,7 +135,7 @@ export const CartPage = () => {
                   >
                     <path
                       fillRule="evenodd"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                       d="M12.3335 1.91667C12.3335 1.07964 11.8628 0.666672 11.0835 0.666672H6.91687C6.13756 0.666672 5.66687 1.07964 5.66687 1.91667C5.66687 2.75371 6.13756 3.16667 6.91687 3.16667L11.0835 3.16667C11.8628 3.16667 12.3335 2.75371 12.3335 1.91667ZM0.66748 5.45834C0.66748 4.37789 1.12306 4.00001 2.12581 4.00001H15.8758C16.8786 4.00001 17.3341 4.37789 17.3341 5.45834C17.3341 6.83352 16.3462 6.91667 15.2502 6.91667V13.3333C15.2502 15.5425 13.4593 17.3333 11.2502 17.3333H6.7502C4.54106 17.3333 2.7502 15.5425 2.7502 13.3333V6.91667C1.65451 6.91667 0.66748 6.83285 0.66748 5.45834ZM9.7502 7.66668C9.7502 7.25247 9.41442 6.91668 9.0002 6.91668C8.58599 6.91668 8.2502 7.25247 8.2502 7.66668L8.2502 13.6667C8.2502 14.0809 8.58599 14.4167 9.0002 14.4167C9.41442 14.4167 9.7502 14.0809 9.7502 13.6667V7.66668ZM5.30404 6.92183C5.71769 6.90015 6.07059 7.21791 6.09227 7.63155L6.40628 13.6233C6.42796 14.037 6.11021 14.3899 5.69656 14.4116C5.28292 14.4332 4.93002 14.1155 4.90834 13.7018L4.59432 7.71006C4.57264 7.29641 4.8904 6.94351 5.30404 6.92183ZM13.4062 7.71005C13.4279 7.2964 13.1101 6.9435 12.6965 6.92182C12.2828 6.90014 11.9299 7.2179 11.9082 7.63154L11.5942 13.6233C11.5725 14.037 11.8903 14.3899 12.3039 14.4115C12.7176 14.4332 13.0705 14.1155 13.0922 13.7018L13.4062 7.71005Z"
                       fill="#ED2C19"
                     />

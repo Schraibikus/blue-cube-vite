@@ -8,6 +8,7 @@ import replaceImage from "../../utils/replaceImage";
 import { getItems } from "../../store/modules/items";
 import { getItem } from "../../store/modules/items";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const ProductsPage = () => {
   const dispatch = useAppDispatch();
@@ -18,12 +19,20 @@ export const ProductsPage = () => {
   const error = useAppSelector((state) => state.items.error);
 
   const getTargetItem = (id: string) => {
-    dispatch(getItem(id));
+    toast.promise(dispatch(getItem(id)), {
+      pending: "Загрузка страницы товара...",
+      success: "Страница товара загружена успешно!",
+      error: "Ошибка при загрузке страницы товара!",
+    });
     navigate(`/products/${id}`);
   };
 
   useEffect(() => {
-    dispatch(getItems(paginationPage));
+    toast.promise(dispatch(getItems(paginationPage)), {
+      pending: "Загрузка товаров...",
+      success: "Товары загружены успешно!",
+      error: "Ошибка при загрузке товаров!",
+    });
   }, [dispatch, paginationPage]);
 
   if (isLoading) {

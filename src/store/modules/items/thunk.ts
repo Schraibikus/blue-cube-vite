@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { fetchGetItems, fetchGetOneItem } from "./apis";
+import { toast } from "react-toastify";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
@@ -9,7 +10,7 @@ export const getItems = createAsyncThunk(
       const { data } = await fetchGetItems(page);
       return data;
     } catch (error) {
-      if (error instanceof AxiosError) return error.message;
+      if (error instanceof AxiosError) return toast.error(error.message);
     }
   }
 );
@@ -21,7 +22,7 @@ export const getItem = createAsyncThunk(
       const data = await fetchGetOneItem(productId);
       return data;
     } catch (error) {
-      if (error instanceof AxiosError) return error.message;
+      if (error instanceof AxiosError) return toast.error(error.message);
     }
   }
 );

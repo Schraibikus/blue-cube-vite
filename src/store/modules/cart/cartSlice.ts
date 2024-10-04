@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Item } from "../items/types";
 import { addItemCart, clearCart, getItemsCart, submitCart } from "./thunk";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 export type CartItem = {
   product: Item;
@@ -49,6 +50,7 @@ const cartSlice = createSlice({
           state.itemsToCart.push({ id, quantity });
         }
       }
+      toast.success("Товар добавлен в корзину!");
     },
     updateQuantity(
       state,
@@ -68,6 +70,7 @@ const cartSlice = createSlice({
       state.itemsToCart = state.itemsToCart.filter(
         (item) => item.id !== action.payload.id
       );
+      toast.error("Товар удален из корзины!");
     },
   },
   extraReducers: (builder) => {
@@ -104,7 +107,6 @@ const cartSlice = createSlice({
       .addCase(
         submitCart.fulfilled,
         (state, action: PayloadAction<CartItem[]>) => {
-          // console.log("payload", action.payload);
           state.isLoading = false;
           state.cartItems = action.payload;
         }

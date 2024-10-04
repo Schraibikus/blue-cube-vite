@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { fetchGetItemsCart, fetchAddItemCart, submitAddItemCart } from "./apis";
 import { Item } from "../items/types";
+import { toast } from "react-toastify";
 
 export const getItemsCart = createAsyncThunk("cart/getItemsCart", async () => {
   try {
@@ -9,7 +10,7 @@ export const getItemsCart = createAsyncThunk("cart/getItemsCart", async () => {
     // console.log("cartItems", data);
     return data;
   } catch (error) {
-    if (error instanceof AxiosError) throw error;
+    if (error instanceof AxiosError) throw toast.error(error.message);
   }
 });
 
@@ -20,7 +21,7 @@ export const addItemCart = createAsyncThunk(
       const data = await fetchAddItemCart(itemsToCart);
       return data;
     } catch (error) {
-      if (error instanceof AxiosError) return error.message;
+      if (error instanceof AxiosError) return toast.error(error.message);
     }
   }
 );
@@ -30,7 +31,7 @@ export const clearCart = createAsyncThunk("cart/clearCart", async () => {
     const data = await fetchAddItemCart([]);
     return data;
   } catch (error) {
-    if (error instanceof AxiosError) return error.message;
+    if (error instanceof AxiosError) return toast.error(error.message);
   }
 });
 
@@ -39,6 +40,6 @@ export const submitCart = createAsyncThunk("cart/submitCart", async () => {
     const data = await submitAddItemCart();
     return data;
   } catch (error) {
-    if (error instanceof AxiosError) return error.message;
+    if (error instanceof AxiosError) return toast.error(error.message);
   }
 });

@@ -12,6 +12,7 @@ import {
 } from "../../store/modules/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart, submitCart } from "../../store/modules/cart";
+import { toast } from "react-toastify";
 
 export const CartPage = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const CartPage = () => {
 
   const handleQuantityChange = (id: string, quantity: number) => {
     dispatch(updateQuantity({ id, quantity }));
+    toast.info("Количество товара изменено");
   };
 
   const handleRemoveItem = (id: string) => {
@@ -40,6 +42,7 @@ export const CartPage = () => {
     });
     await dispatch(submitCart());
     await dispatch(clearCart());
+    toast.success("Заказ успешно оформлен");
     navigate("/products");
   };
 
@@ -173,7 +176,7 @@ export const CartPage = () => {
           </button>
         </div>
       ) : (
-        <div>{error}Cart is empty or error load</div>
+        <div>{toast.error(error)}Cart is empty or error load</div>
       )}
     </Layout>
   );

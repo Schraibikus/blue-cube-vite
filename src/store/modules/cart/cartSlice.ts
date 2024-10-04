@@ -55,9 +55,7 @@ const cartSlice = createSlice({
       action: PayloadAction<{ id: string; quantity: number }>
     ) {
       const { id, quantity } = action.payload;
-      const existingCartItem = state.cartItems.find(
-        (item) => item.product.id === id
-      );
+      const existingCartItem = state.itemsToCart.find((item) => item.id === id);
       if (existingCartItem) {
         existingCartItem.quantity = quantity;
       }
@@ -66,6 +64,9 @@ const cartSlice = createSlice({
       const { id } = action.payload;
       state.cartItems = state.cartItems.filter(
         (item) => item.product.id !== id
+      );
+      state.itemsToCart = state.itemsToCart.filter(
+        (item) => item.id !== action.payload.id
       );
     },
   },
@@ -93,7 +94,7 @@ const cartSlice = createSlice({
         }
       )
       .addCase(clearCart.fulfilled, (state) => {
-        // state.cartItems = [];
+        state.cartItems = [];
         state.itemsToCart = [];
       })
       .addCase(submitCart.pending, (state) => {

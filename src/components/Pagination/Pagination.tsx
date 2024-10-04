@@ -6,9 +6,11 @@ import {
 } from "../../store/modules/pagination/paginationSlice";
 
 export const Pagination = () => {
-  const limitPages = 14;
+  const totalPages = 14;
   const dispatch = useAppDispatch();
-  const paginationPage = useAppSelector((state) => state.pagination.pagination);
+  const currentPageNumber = useAppSelector(
+    (state) => state.pagination.pagination
+  );
 
   const nextPages = () => {
     dispatch(nextPage(1));
@@ -20,26 +22,79 @@ export const Pagination = () => {
 
   function createButtons() {
     const buttons = [];
-    for (let i = 0; i < limitPages; i++) {
+
+    // Добавляем первую страницу
+    buttons.push(
+      <button
+        key={1}
+        className={`${styles.pagination__button}${
+          1 === currentPageNumber ? ` ${styles.pagination__button_active}` : ""
+        }`}
+        onClick={() => handleButton(1)}
+      >
+        1
+      </button>
+    );
+
+    // Добавляем эллипс, если текущая страница не первая
+    if (currentPageNumber > 3) {
+      buttons.push(
+        <span key="ellipsisStart" className={styles.pagination__ellipsis}>
+          <img src="/svg/dots.svg" alt="dots" width={20} height={20} />
+        </span>
+      );
+    }
+
+    // Добавляем диапазон страниц
+    const startPage = Math.max(2, currentPageNumber - 1);
+    const endPage = Math.min(currentPageNumber + 1, totalPages);
+    for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
       buttons.push(
         <button
-          key={i}
+          key={pageNumber}
           className={`${styles.pagination__button}${
-            i + 1 === paginationPage
+            pageNumber === currentPageNumber
               ? ` ${styles.pagination__button_active}`
               : ""
           }`}
-          onClick={() => handleButton(i)}
+          onClick={() => handleButton(pageNumber)}
         >
-          {i + 1}
+          {pageNumber}
         </button>
       );
     }
+
+    // Добавляем эллипс, если текущая страница не последняя
+    if (currentPageNumber < totalPages - 2) {
+      buttons.push(
+        <span key="ellipsis" className={styles.pagination__ellipsis}>
+          <img src="/svg/dots.svg" alt="dots" width={20} height={20} />
+        </span>
+      );
+    }
+
+    // Добавляем последнюю страницу
+    if (endPage < totalPages) {
+      buttons.push(
+        <button
+          key={`${totalPages}_last`}
+          className={`${styles.pagination__button}${
+            totalPages === currentPageNumber
+              ? ` ${styles.pagination__button_active}`
+              : ""
+          }`}
+          onClick={() => handleButton(totalPages)}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
     return buttons;
   }
 
   function handleButton(page: number) {
-    dispatch(currentPage(page));
+    dispatch(currentPage(page - 1));
   }
 
   return (
@@ -47,7 +102,7 @@ export const Pagination = () => {
       <button
         className={styles.pagination__button}
         type="button"
-        disabled={paginationPage === 1}
+        disabled={currentPageNumber === 1}
         onClick={() => undoPages()}
       >
         <img
@@ -61,7 +116,7 @@ export const Pagination = () => {
       <button
         className={styles.pagination__button}
         type="button"
-        disabled={paginationPage === limitPages}
+        disabled={currentPageNumber === totalPages}
         onClick={() => nextPages()}
       >
         <img

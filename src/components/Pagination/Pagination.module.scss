@@ -8,6 +8,12 @@
   font-weight: 700;
   font-size: 16px;
 
+  &_ellipsis {
+    border: none;
+    background-color: transparent;
+    width: 36px;
+  }
+
   &__button {
     display: flex;
     align-items: center;

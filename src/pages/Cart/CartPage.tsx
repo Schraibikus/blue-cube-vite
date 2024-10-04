@@ -30,7 +30,6 @@ export const CartPage = () => {
   };
 
   const handleOrder = async () => {
-    // dispatch(addItemCart(itemInCart));
     const cartItems = cart.filter((item) => item.quantity > 0);
     cartItems.forEach((item) => {
       if (item.quantity > 0) {

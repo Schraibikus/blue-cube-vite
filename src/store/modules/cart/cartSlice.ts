@@ -45,8 +45,16 @@ const cartSlice = createSlice({
           (item) => item.id === id
         );
         if (existingCartItem) {
-          existingCartItem.quantity += quantity;
-        } else {
+          if (quantity > 0) {
+            existingCartItem.quantity += quantity;
+          } else if (existingCartItem.quantity + quantity <= 0) {
+            state.itemsToCart = state.itemsToCart.filter(
+              (item) => item.id !== id
+            );
+          } else {
+            existingCartItem.quantity += quantity;
+          }
+        } else if (quantity > 0) {
           state.itemsToCart.push({ id, quantity });
         }
       }
@@ -57,9 +65,17 @@ const cartSlice = createSlice({
       action: PayloadAction<{ id: string; quantity: number }>
     ) {
       const { id, quantity } = action.payload;
-      const existingCartItem = state.itemsToCart.find((item) => item.id === id);
-      if (existingCartItem) {
-        existingCartItem.quantity = quantity;
+      const existingItemsToCart = state.itemsToCart.find(
+        (item) => item.id === id
+      );
+      if (existingItemsToCart) {
+        existingItemsToCart.quantity = quantity;
+      }
+      const existingCartItems = state.cartItems.find(
+        (item) => item.product.id === id
+      );
+      if (existingCartItems) {
+        existingCartItems.quantity = quantity;
       }
     },
     removeItem(state, action: PayloadAction<{ id: string }>) {
@@ -107,6 +123,7 @@ const cartSlice = createSlice({
       .addCase(
         submitCart.fulfilled,
         (state, action: PayloadAction<CartItem[]>) => {
+          state.cartItems.filter((item) => item.quantity > 0);
           state.isLoading = false;
           state.cartItems = action.payload;
         }

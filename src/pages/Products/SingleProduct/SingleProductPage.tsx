@@ -14,6 +14,7 @@ export const SingleProductPage = () => {
   const { productId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [showMore, setShowMore] = useState(false);
 
   const item = useAppSelector((state) => state.items.item);
   const isLoading = useAppSelector((state) => state.items.isLoading);
@@ -171,10 +172,26 @@ export const SingleProductPage = () => {
             <div className={styles.product__description}>
               <h3>Описание</h3>
               <div
+                className={
+                  showMore
+                    ? styles.product__description_text_active
+                    : styles.product__description_text
+                }
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(item.description),
                 }}
               ></div>
+              <button
+                className={
+                  showMore
+                    ? styles.product__description_btn_active
+                    : styles.product__description_btn
+                }
+                type="button"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore ? "Скрыть" : "Подробнее"}
+              </button>
             </div>
           </>
         ) : (

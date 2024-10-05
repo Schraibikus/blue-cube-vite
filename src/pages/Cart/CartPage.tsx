@@ -176,7 +176,7 @@ export const CartPage = () => {
           </button>
         </div>
       ) : (
-        <div>{toast.error(error)}Cart is empty or error load</div>
+        <div>{error}Cart is empty or error load</div>
       )}
     </Layout>
   );

@@ -5,11 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useEffect } from "react";
 
 import { addItemCart } from "../../store/modules/cart";
-import {
-  addToCartItems,
-  removeItem,
-  updateQuantity,
-} from "../../store/modules/cart/cartSlice";
+import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart, submitCart } from "../../store/modules/cart";
 import { toast } from "react-toastify";
@@ -29,21 +25,26 @@ export const CartPage = () => {
 
   const handleRemoveItem = (id: string) => {
     dispatch(removeItem({ id }));
+    toast.error("Из заказа удален товар с нулевым количеством");
   };
 
-  const handleOrder = async () => {
-    const cartItems = cart.filter((item) => item.quantity > 0);
-    cartItems.forEach((item) => {
-      if (item.quantity > 0) {
-        dispatch(
-          addToCartItems({ id: item.product.id, quantity: item.quantity })
-        );
+  const removeEmptyItems = () => {
+    itemInCart.forEach((item) => {
+      if (item.quantity === 0) {
+        dispatch(removeItem({ id: item.id }));
+        toast.error("Из заказа удален товар с нулевым количеством");
       }
     });
-    await dispatch(submitCart());
-    await dispatch(clearCart());
-    toast.success("Заказ успешно оформлен");
-    navigate("/products");
+  };
+
+  const handleOrder = () => {
+    removeEmptyItems();
+    setTimeout(() => {
+      dispatch(submitCart());
+      dispatch(clearCart());
+      toast.success("Заказ успешно оформлен");
+      navigate("/products");
+    }, 300);
   };
 
   useEffect(() => {

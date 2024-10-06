@@ -66,15 +66,19 @@ export const SingleProductPage = () => {
                   <h1 className={styles.product__title}>{item.title}</h1>
                   <div className={styles.product__rating}>
                     {[...Array(5)].map((_, i) => (
-                      <span
-                        key={i}
-                        className={
-                          i < item.rating
-                            ? `${styles.product__rating_starFilled}`
-                            : `${styles.product__rating_starEmpty}`
-                        }
-                      >
-                        &#9733;
+                      <span key={i} className={styles.product__rating_star}>
+                        <img
+                          src={
+                            i < Math.floor(item.rating)
+                              ? `${"/svg/FullStar.svg"}`
+                              : i < item.rating
+                              ? `${"/svg/HalfStar.svg"}`
+                              : `${"/svg/EmptyStar.svg"}`
+                          }
+                          alt="star"
+                          width={12}
+                          height={12}
+                        />
                       </span>
                     ))}
                   </div>

@@ -19,7 +19,7 @@
     height: 358px;
 
     &:hover {
-      background-color: #f2f2f2;
+      opacity: 0.8;
     }
 
     &__title {
@@ -44,12 +44,12 @@
     &__rating {
       align-self: start;
       padding-left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
 
-      &_starFilled {
-        color: var(--accent);
-      }
-      &_starEmpty {
-        color: var(--gray-light);
+      &_star {
+        margin-bottom: 16px;
       }
     }
   }

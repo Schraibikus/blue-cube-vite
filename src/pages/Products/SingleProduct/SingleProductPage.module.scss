@@ -31,6 +31,31 @@
     padding: 24px;
     gap: 24px;
 
+    @media (max-width: 1100px) {
+      width: 580px;
+
+      &_image {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 850px) {
+      margin-top: 30px;
+      padding: 12px;
+      margin-inline: 15px;
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      width: 460px;
+      &_image {
+        width: 180px;
+        height: 180px;
+        align-self: center;
+      }
+    }
+
     &_right {
       display: flex;
       flex-direction: column;
@@ -43,6 +68,14 @@
     font-size: 28px;
     line-height: 32px;
     margin-bottom: 8px;
+
+    @media (max-width: 1100px) {
+      font-size: 20px;
+    }
+
+    @media (max-width: 600px) {
+      width: 460px;
+    }
   }
 
   &__rating {
@@ -58,12 +91,20 @@
     line-height: 32px;
     font-family: var(--font-price);
     margin-bottom: 8px;
+
+    @media (max-width: 1100px) {
+      font-size: 20px;
+    }
   }
 
   &__ordersBlock {
     display: flex;
     gap: 8px;
     align-items: center;
+
+    @media (max-width: 1100px) {
+      width: 300px;
+    }
 
     &_wrapper {
       display: flex;
@@ -123,6 +164,10 @@
     cursor: pointer;
     font-family: var(--font-family-base);
 
+    @media (max-width: 1100px) {
+      width: 250px;
+    }
+
     &:hover {
       opacity: 0.8;
     }
@@ -150,16 +195,22 @@
   }
 
   &__undo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+    @media (max-width: 600px) {
+      display: none;
+    }
 
-    & p {
-      margin: 0;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 20px;
+    &_text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+
+      & p {
+        margin: 0;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 20px;
+      }
     }
   }
 
@@ -168,6 +219,10 @@
     font-size: 12px;
     line-height: 16px;
     color: var(--gray);
+
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 
   &__description {
@@ -176,6 +231,14 @@
     border-radius: 16px;
     padding: 24px;
     position: relative;
+
+    @media (max-width: 1100px) {
+      width: 580px;
+    }
+
+    @media (max-width: 600px) {
+      width: 460px;
+    }
 
     &_text {
       max-height: 268px;

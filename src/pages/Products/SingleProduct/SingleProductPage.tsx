@@ -60,6 +60,7 @@ export const SingleProductPage = () => {
                 height={374}
                 alt={item.title}
                 onError={replaceImage}
+                className={styles.product__top_image}
               />
               <div className={styles.product__top_right}>
                 <div>
@@ -152,8 +153,8 @@ export const SingleProductPage = () => {
                     </div>
                   )}
                 </div>
-                <div>
-                  <div className={styles.product__undo}>
+                <div className={styles.product__undo}>
+                  <div className={styles.product__undo_logo}>
                     <img
                       src="/svg/undo.svg"
                       width={20}

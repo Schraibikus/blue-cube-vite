@@ -7,6 +7,7 @@ import {
 } from "../../../store/modules/cart/cartSlice";
 import { useAppDispatch } from "../../../hooks/redux";
 import { getItem } from "../../../store/modules/items";
+import replaceImage from "../../../utils/replaceImage";
 
 export const SingleOrderPage = ({
   order,
@@ -63,6 +64,7 @@ export const SingleOrderPage = ({
                 alt="empty"
                 width={48}
                 height={48}
+                onError={replaceImage}
               />
             ))
           ) : (

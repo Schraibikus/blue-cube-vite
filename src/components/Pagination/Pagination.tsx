@@ -5,8 +5,14 @@ import {
   nextPage,
 } from "../../store/modules/pagination/paginationSlice";
 
-export const Pagination = () => {
-  const totalPages = 14;
+export const Pagination = ({
+  maxItems,
+  maxItemToPage,
+}: {
+  maxItems: number;
+  maxItemToPage: number;
+}) => {
+  const totalPages = Math.ceil(maxItems / maxItemToPage);
   const dispatch = useAppDispatch();
   const currentPageNumber = useAppSelector(
     (state) => state.pagination.pagination

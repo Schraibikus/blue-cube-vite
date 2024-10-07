@@ -89,7 +89,7 @@ export const ProductsPage = () => {
           <div>{error}</div>
         )}
       </div>
-      <Pagination />
+      <Pagination maxItems={200} maxItemToPage={15} />
     </Layout>
   );
 };

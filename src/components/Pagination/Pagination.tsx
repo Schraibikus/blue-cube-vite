@@ -28,7 +28,6 @@ export const Pagination = ({
 
   function createButtons() {
     const buttons = [];
-
     // Добавляем первую страницу
     buttons.push(
       <button
@@ -41,7 +40,6 @@ export const Pagination = ({
         1
       </button>
     );
-
     // Добавляем эллипс, если текущая страница не первая
     if (currentPageNumber > 3) {
       buttons.push(
@@ -50,7 +48,6 @@ export const Pagination = ({
         </span>
       );
     }
-
     // Добавляем диапазон страниц
     const startPage = Math.max(2, currentPageNumber - 1);
     const endPage = Math.min(currentPageNumber + 1, totalPages);
@@ -69,7 +66,6 @@ export const Pagination = ({
         </button>
       );
     }
-
     // Добавляем эллипс, если текущая страница не последняя
     if (currentPageNumber < totalPages - 2) {
       buttons.push(
@@ -78,7 +74,6 @@ export const Pagination = ({
         </span>
       );
     }
-
     // Добавляем последнюю страницу
     if (endPage < totalPages) {
       buttons.push(

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 
 import { Layout } from "../../../components/Layout";
@@ -7,6 +7,7 @@ import styles from "./SingleProductPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
 import { addToCartItems } from "../../../store/modules/cart/cartSlice";
+import { getItem } from "../../../store/modules/items";
 
 export const SingleProductPage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,12 @@ export const SingleProductPage = () => {
       dispatch(addToCartItems({ id, quantity }));
     }
   };
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(getItem(productId));
+    }
+  }, [productId, dispatch]);
 
   const handleAddToCart = () => {
     addToCart(productId ?? "", quantity);

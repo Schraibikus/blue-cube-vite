@@ -7,8 +7,9 @@ import truncateText from "../../utils/truncateText";
 import replaceImage from "../../utils/replaceImage";
 import { getItems } from "../../store/modules/items";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { setPaginationPage } from "../../store/modules/pagination/paginationSlice";
+
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const ProductsPage = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ export const ProductsPage = () => {
   const items = useAppSelector((state) => state.items.itemsList);
   const isLoading = useAppSelector((state) => state.items.isLoading);
   const error = useAppSelector((state) => state.items.error);
+
   const [parent, enableAnimations] = useAutoAnimate();
 
   useEffect(() => {

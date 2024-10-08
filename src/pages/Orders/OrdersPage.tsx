@@ -38,7 +38,9 @@ export const OrdersPage = () => {
       ) : (
         <div>Заказов нет</div>
       )}
-      <Pagination maxItems={orders.length} maxItemToPage={maxItemToPage} />
+      {orders.length > 8 && (
+        <Pagination maxItems={orders.length} maxItemToPage={maxItemToPage} />
+      )}
     </Layout>
   );
 };

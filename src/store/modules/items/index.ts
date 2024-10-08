@@ -1,1 +1,1 @@
-export { getItems, getItem } from "./thunk";
+export { getItems, getItem, getSearchItems } from "./thunk";

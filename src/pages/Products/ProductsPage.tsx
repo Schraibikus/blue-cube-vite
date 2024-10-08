@@ -6,34 +6,37 @@ import styles from "./ProductsPage.module.scss";
 import truncateText from "../../utils/truncateText";
 import replaceImage from "../../utils/replaceImage";
 import { getItems } from "../../store/modules/items";
-import { getItem } from "../../store/modules/items";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { setPaginationPage } from "../../store/modules/pagination/paginationSlice";
 
 export const ProductsPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const paginationPage = useAppSelector((state) => state.pagination.pagination);
   const items = useAppSelector((state) => state.items.itemsList);
   const isLoading = useAppSelector((state) => state.items.isLoading);
   const error = useAppSelector((state) => state.items.error);
-
-  const getTargetItem = (id: string) => {
-    toast.promise(dispatch(getItem(id)), {
-      pending: "Загрузка страницы товара...",
-      success: "Страница товара загружена успешно!",
-      error: "Ошибка при загрузке страницы товара!",
-    });
-    navigate(`/products/${id}`);
-  };
+  const [parent, enableAnimations] = useAutoAnimate();
 
   useEffect(() => {
-    toast.promise(dispatch(getItems(paginationPage)), {
-      pending: "Загрузка товаров...",
-      success: "Товары загружены успешно!",
-      error: "Ошибка при загрузке товаров!",
-    });
+    const currentPage = new URLSearchParams(location.search).get("page");
+    if (currentPage) {
+      dispatch(setPaginationPage(parseInt(currentPage)));
+    }
+  }, [dispatch, location.search]);
+
+  useEffect(() => {
+    dispatch(getItems(paginationPage));
   }, [dispatch, paginationPage]);
+
+  // при обновлении страницы сохраняем текущую страницу пагинации
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", paginationPage.toString());
+    navigate({ search: params.toString() }, { replace: true });
+  }, [paginationPage, navigate, location.search]);
 
   if (isLoading) {
     return (
@@ -49,10 +52,12 @@ export const ProductsPage = () => {
         {items.length ? (
           items.map((elem) => (
             <div
+              ref={parent}
               key={elem.id}
               className={styles.card}
               onClick={() => {
-                getTargetItem(elem.id);
+                enableAnimations(false);
+                navigate(`/products/${elem.id}`);
               }}
             >
               <img

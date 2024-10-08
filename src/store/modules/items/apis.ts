@@ -14,3 +14,11 @@ export const fetchGetOneItem = async (productId: string) => {
   });
   return data;
 };
+
+export const fetchSearchItems = async (search: string) => {
+  const { data } = await api.get(
+    `products?search=${search}&page=1&limit=15&sort=title:asc`,
+    { withCredentials: true }
+  );
+  return data;
+};

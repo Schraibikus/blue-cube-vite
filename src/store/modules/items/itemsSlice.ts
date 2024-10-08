@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { getItem, getItems } from "./";
+import { getItem, getItems, getSearchItems } from "./";
 import { Item } from "./types";
 
 type ItemsState = {
@@ -8,6 +8,8 @@ type ItemsState = {
   itemsList: Item[];
   isLoading: boolean;
   error: string | null;
+  // searchValue: string;
+  foundItems: Item[];
 };
 
 const initialState: ItemsState = {
@@ -23,6 +25,8 @@ const initialState: ItemsState = {
   itemsList: [],
   isLoading: false,
   error: null,
+  // searchValue: "",
+  foundItems: [],
 };
 
 const itemsSlice = createSlice({
@@ -56,6 +60,23 @@ const itemsSlice = createSlice({
       .addCase(getItem.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch item";
+      })
+      .addCase(getSearchItems.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        getSearchItems.fulfilled,
+        (state, action: PayloadAction<Item[]>) => {
+          state.isLoading = false;
+          if (Array.isArray(action.payload)) {
+            state.foundItems = action.payload;
+          }
+        }
+      )
+      .addCase(getSearchItems.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Failed to fetch items";
       });
   },
 });

@@ -9,10 +9,12 @@ import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { clearCart, submitCart } from "../../store/modules/cart";
 import { toast } from "react-toastify";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const CartPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [parent] = useAutoAnimate();
   const cart = useAppSelector((state) => state.cart.cartItems);
   const isLoading = useAppSelector((state) => state.cart.isLoading);
   const error = useAppSelector((state) => state.cart.error);
@@ -66,7 +68,7 @@ export const CartPage = () => {
   return (
     <Layout>
       {cart.length ? (
-        <div className={styles.cart}>
+        <div className={styles.cart} ref={parent}>
           {cart.flat().map((item) => (
             <div key={item.product.id} className={styles.cart__item}>
               <img

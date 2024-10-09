@@ -8,6 +8,7 @@ import {
 import { useAppDispatch } from "../../../hooks/redux";
 import { getItem } from "../../../store/modules/items";
 import replaceImage from "../../../utils/replaceImage";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const SingleOrderPage = ({
   order,
@@ -18,6 +19,7 @@ export const SingleOrderPage = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [parent] = useAutoAnimate();
 
   const getTargetItem = (id: string) => {
     dispatch(getItem(id));
@@ -47,7 +49,7 @@ export const SingleOrderPage = ({
         0
       );
   return (
-    <section className={styles.container}>
+    <section className={styles.container} ref={parent}>
       <div className={styles.order}>
         <div className={styles.order__info}>
           <p className={styles.order__info_title}>Заказ</p>

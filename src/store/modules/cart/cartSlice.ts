@@ -99,7 +99,9 @@ const cartSlice = createSlice({
         getItemsCart.fulfilled,
         (state, action: PayloadAction<CartItem[]>) => {
           state.isLoading = false;
-          state.cartItems = action.payload;
+          if (Array.isArray(action.payload)) {
+            state.cartItems = action.payload;
+          }
         }
       )
       .addCase(getItemsCart.rejected, (state, action) => {

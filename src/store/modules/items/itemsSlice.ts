@@ -8,7 +8,7 @@ type ItemsState = {
   itemsList: Item[];
   isLoading: boolean;
   error: string | null;
-  // searchValue: string;
+  searchValue: string;
   foundItems: Item[];
 };
 
@@ -25,14 +25,18 @@ const initialState: ItemsState = {
   itemsList: [],
   isLoading: false,
   error: null,
-  // searchValue: "",
+  searchValue: "",
   foundItems: [],
 };
 
 const itemsSlice = createSlice({
   name: "items",
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getItems.pending, (state) => {
@@ -81,4 +85,5 @@ const itemsSlice = createSlice({
   },
 });
 
+export const { setSearchValue } = itemsSlice.actions;
 export default itemsSlice.reducer;

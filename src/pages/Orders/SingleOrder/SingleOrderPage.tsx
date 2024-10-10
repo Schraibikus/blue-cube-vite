@@ -48,6 +48,7 @@ export const SingleOrderPage = ({
           obj.product.price * obj.quantity + sum,
         0
       );
+
   return (
     <section className={styles.container} ref={parent}>
       <div className={styles.order}>

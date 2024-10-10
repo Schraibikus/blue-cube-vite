@@ -32,8 +32,6 @@ export const getSearchItems = createAsyncThunk(
   async (search: string) => {
     try {
       const { data } = await fetchSearchItems(search);
-      console.log(data);
-
       return data;
     } catch (error) {
       if (error instanceof AxiosError) return toast.error(error.message);

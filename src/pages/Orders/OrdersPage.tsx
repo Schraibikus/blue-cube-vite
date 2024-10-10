@@ -13,13 +13,18 @@ export const OrdersPage = () => {
   const dispatch = useAppDispatch();
   const [parent] = useAutoAnimate();
   const orders = useAppSelector((state) => state.orders.orders);
+  console.log("orders", orders);
   const currentPage = useAppSelector((state) => state.pagination.pagination);
+  console.log("currentPage", currentPage);
   const maxItemToPage = 8;
 
   const startItem = (currentPage - 1) * maxItemToPage;
+  console.log("startItem", startItem);
   const endItem = startItem + maxItemToPage;
+  console.log("endItem", endItem);
 
   const currentPageOrders = orders.slice(startItem, endItem);
+  console.log("currentPageOrders", currentPageOrders);
 
   useEffect(() => {
     toast.promise(dispatch(getOrders()), {
@@ -31,17 +36,23 @@ export const OrdersPage = () => {
 
   return (
     <Layout>
-      {currentPageOrders.length ? (
+      {orders.length && orders.length <= 8 ? (
         <section className={styles.container} ref={parent}>
-          {currentPageOrders.map((order: CartItem, idx: number) => (
-            <SingleOrderPage key={idx} order={order} idx={startItem + idx} />
+          {orders.map((order: CartItem, idx: number) => (
+            <SingleOrderPage key={idx} order={order} idx={idx} />
           ))}
         </section>
+      ) : orders.length > 8 ? (
+        <>
+          <section className={styles.container} ref={parent}>
+            {currentPageOrders.map((order: CartItem, idx: number) => (
+              <SingleOrderPage key={idx} order={order} idx={startItem + idx} />
+            ))}
+          </section>
+          <Pagination maxItems={orders.length} maxItemToPage={maxItemToPage} />
+        </>
       ) : (
-        <div>Заказов нет</div>
-      )}
-      {orders.length > 8 && (
-        <Pagination maxItems={orders.length} maxItemToPage={maxItemToPage} />
+        <p>Заказы не найдены</p>
       )}
     </Layout>
   );

@@ -1,15 +1,16 @@
+import { useEffect } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Layout } from "../../components/Layout";
 import replaceImage from "../../utils/replaceImage";
 import styles from "./CartPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { useEffect } from "react";
 
+import { Spinner } from "../../components/Spinner";
 import { addItemCart } from "../../store/modules/cart";
 import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
-import { useNavigate } from "react-router-dom";
 import { clearCart, submitCart } from "../../store/modules/cart";
-import { toast } from "react-toastify";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const CartPage = () => {
   const dispatch = useAppDispatch();
@@ -39,14 +40,13 @@ export const CartPage = () => {
     });
   };
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     removeEmptyItems();
-    setTimeout(() => {
-      dispatch(submitCart());
-      dispatch(clearCart());
-      toast.success("Заказ успешно оформлен");
-      navigate("/products");
-    }, 300);
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await dispatch(submitCart());
+    await dispatch(clearCart());
+    toast.success("Заказ успешно оформлен");
+    navigate("/products");
   };
 
   useEffect(() => {
@@ -60,7 +60,9 @@ export const CartPage = () => {
   if (isLoading) {
     return (
       <Layout>
-        <div className={styles.loading}>... loading ...</div>
+        <div className={styles.load__container} ref={parent}>
+          <Spinner />
+        </div>
       </Layout>
     );
   }
@@ -179,7 +181,27 @@ export const CartPage = () => {
           </button>
         </div>
       ) : (
-        <div>{error}Cart is empty or error load</div>
+        <div className={styles.cart__empty}>
+          <Link to="/" className={styles.cart__empty_link}>
+            главная
+          </Link>
+          <p className={styles.cart__empty_title}>корзина</p>
+          <div className={styles.cart__empty_info}>
+            <img
+              src="/svg/empty-cart.svg"
+              alt="empty cart"
+              width={240}
+              height={240}
+            />
+            {error ? (
+              error
+            ) : (
+              <p className={styles.cart__empty_info_text}>
+                Корзина ждет товаров
+              </p>
+            )}
+          </div>
+        </div>
       )}
     </Layout>
   );

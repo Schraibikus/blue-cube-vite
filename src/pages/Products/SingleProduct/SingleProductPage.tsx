@@ -8,8 +8,11 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
 import { addToCartItems } from "../../../store/modules/cart/cartSlice";
 import { getItem } from "../../../store/modules/items";
+import { Spinner } from "../../../components/Spinner";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export const SingleProductPage = () => {
+  const [parent] = useAutoAnimate();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { productId } = useParams();
@@ -41,7 +44,9 @@ export const SingleProductPage = () => {
   if (isLoading) {
     return (
       <Layout>
-        <div className={styles.loading}>... loading ...</div>
+        <div className={styles.load__container} ref={parent}>
+          <Spinner />
+        </div>
       </Layout>
     );
   }

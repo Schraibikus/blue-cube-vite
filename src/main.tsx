@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import store from "../src/store/index.ts";
 import App from "./App.tsx";
 import "./styles/globals.scss";
-import "react-toastify/dist/ReactToastify.css";
+import "./styles/toastStyles.scss";
 import { ToastContainer } from "react-toastify";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

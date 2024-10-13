@@ -3,10 +3,16 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
+import getClubCountWordForm from "../../utils/getAllClubCountWordForm";
 
 export const SearchInput = () => {
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.items.searchValue);
+  const foundItems = useAppSelector((state) => state.items.foundItems);
+
+  const filteredItems = foundItems.filter((item) =>
+    item.title.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   const handleSearchInputChange = (event: { target: { value: string } }) => {
     dispatch(setSearchValue(event.target.value));
@@ -22,7 +28,11 @@ export const SearchInput = () => {
     <div className={styles.container}>
       <div className={styles.search}>
         <h4>
-          {searchValue ? `Поиск по запросу: "${searchValue}"` : "Все товары"}
+          {searchValue
+            ? `Поиск по запросу: "${searchValue}", найдено: ${
+                filteredItems.length
+              } ${getClubCountWordForm(filteredItems.length)}`
+            : "Все товары"}
         </h4>
         <div className={styles.search__block}>
           <img src="/svg/search.svg" alt="Search" />

@@ -1,3 +1,10 @@
+.load__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .products {
   z-index: 10;
   display: grid;
@@ -34,9 +41,11 @@
     cursor: pointer;
     width: 250px;
     height: 358px;
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 
     &:hover {
-      opacity: 0.8;
+      box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.06);
+      transform: translateY(-5px);
     }
 
     &__title {

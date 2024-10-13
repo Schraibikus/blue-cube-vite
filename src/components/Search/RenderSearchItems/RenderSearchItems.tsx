@@ -13,6 +13,7 @@ export const RenderSearchItems = () => {
     item.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+
   const getTargetItem = (id: string) => {
     navigate(`/products/${id}`);
   };

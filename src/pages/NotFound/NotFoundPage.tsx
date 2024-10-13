@@ -1,11 +1,36 @@
 import { Link } from "react-router-dom";
+import { Layout } from "../../components/Layout";
 
 export const NotFoundPage = () => {
   return (
-    <div>
-      <h1>404: Страница не найдена</h1>
-      <p>Извините, но страница, которую вы ищете, не существует.</p>
-      <Link to="/products">Вернуться на список товаров</Link>
-    </div>
+    <Layout>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          alignItems: "center",
+        }}
+      >
+        <Link
+          to="/products"
+          style={{
+            textDecoration: "none",
+            cursor: "pointer",
+            color: "var(--gray)",
+            fontSize: "16px",
+            alignSelf: "start",
+            paddingLeft: "32px",
+          }}
+        >
+          На главную
+        </Link>
+        <img src="svg/404.svg" alt="404" width={320} height={200} />
+        <p style={{ fontSize: "20px", textAlign: "center" }}>
+          Страницы по этому адресу нет. <br /> Проверьте адрес или перейдите на
+          главную
+        </p>
+      </div>
+    </Layout>
   );
 };

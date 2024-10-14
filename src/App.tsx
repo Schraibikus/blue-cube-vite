@@ -5,19 +5,22 @@ import { NotFoundPage } from "./pages/NotFound/NotFoundPage";
 import { ProductsPage } from "./pages/Products";
 import { OrdersPage } from "./pages/Orders";
 import { CartPage } from "./pages/Cart";
-import { SingleProductPage } from "./pages/Products/SingleProduct";
+import { SelectedProductPage } from "./pages/Products/SelectedProduct";
+import ErrorBoundary from "./utils/ErrorBoundary";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />} />
-      <Route index element={<MainPage />} />
-      <Route path="/products" element={<ProductsPage />} />
-      <Route path="/products/:productId" element={<SingleProductPage />} />
-      <Route path="/orders" element={<OrdersPage />} />
-      <Route path="/cart" element={<CartPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <ErrorBoundary>
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route index element={<MainPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:productId" element={<SelectedProductPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </ErrorBoundary>
   );
 }
 

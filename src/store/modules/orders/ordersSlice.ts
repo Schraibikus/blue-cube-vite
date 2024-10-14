@@ -27,11 +27,8 @@ const ordersSlice = createSlice({
       .addCase(
         getOrders.fulfilled,
         (state, action: PayloadAction<CartItem[]>) => {
-          // console.log("payload", action.payload);
           state.isLoading = false;
-          // if (Array.isArray(action.payload)) {
           state.orders = action.payload;
-          // }
         }
       )
       .addCase(getOrders.rejected, (state, action) => {

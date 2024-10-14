@@ -1,38 +1,41 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+
 import { Layout } from "../../components/Layout";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { useEffect } from "react";
 import { getOrders } from "../../store/modules/orders";
 import { SingleOrderPage } from "./SingleOrder";
 import styles from "./OrdersPage.module.scss";
 import { CartItem } from "../../store/modules/cart/cartSlice";
-import { toast } from "react-toastify";
 import { Pagination } from "../../components/Pagination";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Spinner } from "../../components/Spinner";
 
 export const OrdersPage = () => {
   const dispatch = useAppDispatch();
   const [parent] = useAutoAnimate();
   const orders = useAppSelector((state) => state.orders.orders);
-  console.log("orders", orders);
+  const isLoading = useAppSelector((state) => state.orders.isLoading);
+  const error = useAppSelector((state) => state.orders.error);
   const currentPage = useAppSelector((state) => state.pagination.pagination);
-  console.log("currentPage", currentPage);
   const maxItemToPage = 8;
 
   const startItem = (currentPage - 1) * maxItemToPage;
-  console.log("startItem", startItem);
   const endItem = startItem + maxItemToPage;
-  console.log("endItem", endItem);
 
   const currentPageOrders = orders.slice(startItem, endItem);
-  console.log("currentPageOrders", currentPageOrders);
 
   useEffect(() => {
-    toast.promise(dispatch(getOrders()), {
-      pending: "Загрузка заказов...",
-      success: "Заказы загружены успешно!",
-      error: "Ошибка при загрузке заказов!",
-    });
+    dispatch(getOrders());
   }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className={styles.load__container} ref={parent}>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <Layout>
@@ -52,7 +55,25 @@ export const OrdersPage = () => {
           <Pagination maxItems={orders.length} maxItemToPage={maxItemToPage} />
         </>
       ) : (
-        <p>Заказы не найдены</p>
+        <div className={styles.order__empty}>
+          <Link to="/" className={styles.order__empty_link}>
+            главная
+          </Link>
+          <p className={styles.order__empty_title}>заказы</p>
+          <div className={styles.order__empty_info}>
+            <img
+              src="/package-icon.png"
+              alt="empty orders"
+              width={240}
+              height={240}
+            />
+            {error ? (
+              error
+            ) : (
+              <p className={styles.order__empty_info_text}>Заказов пока нет</p>
+            )}
+          </div>
+        </div>
       )}
     </Layout>
   );

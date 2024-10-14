@@ -58,18 +58,29 @@ export const SingleOrderPage = ({
         </div>
         <div className={styles.order__images}>
           {Array.isArray(order) ? (
-            order.map((elem: { product: { id: string; picture: string } }) => (
-              <img
-                key={elem.product.id}
-                className={styles.order__images_item}
-                onClick={() => getTargetItem(elem.product.id)}
-                src={elem.product.picture}
-                alt="empty"
-                width={48}
-                height={48}
-                onError={replaceImage}
-              />
-            ))
+            order.map(
+              (elem: {
+                quantity: number;
+                product: {
+                  id: string;
+                  picture: string;
+                  title: string;
+                  price: number;
+                };
+              }) => (
+                <img
+                  key={elem.product.id}
+                  className={styles.order__images_item}
+                  onClick={() => getTargetItem(elem.product.id)}
+                  src={elem.product.picture}
+                  alt="empty"
+                  width={48}
+                  height={48}
+                  onError={replaceImage}
+                  title={`Товар: ${elem.product.title}, Стоимость: ${elem.product.price} руб, Количество в заказе: ${elem.quantity}`}
+                />
+              )
+            )
           ) : (
             <img
               key={order.product.id}

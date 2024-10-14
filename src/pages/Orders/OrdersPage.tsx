@@ -1,13 +1,14 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+
 import { Layout } from "../../components/Layout";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { useEffect } from "react";
 import { getOrders } from "../../store/modules/orders";
 import { SingleOrderPage } from "./SingleOrder";
 import styles from "./OrdersPage.module.scss";
 import { CartItem } from "../../store/modules/cart/cartSlice";
 import { Pagination } from "../../components/Pagination";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Link } from "react-router-dom";
 import { Spinner } from "../../components/Spinner";
 
 export const OrdersPage = () => {

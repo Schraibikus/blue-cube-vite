@@ -27,6 +27,7 @@
     display: flex;
     gap: 16px;
     align-items: center;
+    user-select: none;
 
     @media (max-width: 1100px) {
       align-self: start;
@@ -61,6 +62,7 @@
     gap: 8px;
     align-items: center;
     font-weight: 700;
+    user-select: none;
 
     &__title {
       color: var(--gray);

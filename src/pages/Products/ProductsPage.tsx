@@ -3,8 +3,6 @@ import { Layout } from "../../components/Layout";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from "./ProductsPage.module.scss";
-import truncateText from "../../utils/truncateText";
-import replaceImage from "../../utils/replaceImage";
 import { getItems } from "../../store/modules/items";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setPaginationPage } from "../../store/modules/pagination/paginationSlice";
@@ -13,6 +11,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { SearchInput } from "../../components/Search";
 import { RenderSearchItems } from "../../components/Search/RenderSearchItems";
 import { Spinner } from "../../components/Spinner";
+import { SingleProduct } from "./SingleProduct";
 
 export const ProductsPage = () => {
   const [parent] = useAutoAnimate();
@@ -55,60 +54,17 @@ export const ProductsPage = () => {
 
   return (
     <Layout>
-      <select>
-        <option value="name">По названию</option>
-        <option value="price">По цене (дешевле)</option>
-        <option value="-price">По цене (дороже)</option>
-      </select>
       <SearchInput />
       {searchValue ? (
         <RenderSearchItems />
       ) : (
         <>
           <div className={styles.products} ref={parent}>
-            {items.length ? (
-              items.map((elem) => (
-                <div
-                  key={elem.id}
-                  className={styles.card}
-                  onClick={() => {
-                    navigate(`/products/${elem.id}`);
-                  }}
-                >
-                  <img
-                    src={elem.picture}
-                    alt={truncateText(elem.title, 2)}
-                    width={250}
-                    height={250}
-                    onError={(e) => replaceImage(e)}
-                  />
-
-                  <div className={styles.card__title}>{elem.title}</div>
-                  <div className={styles.card__rating}>
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className={styles.card__rating_star}>
-                        <img
-                          src={
-                            i < Math.floor(elem.rating)
-                              ? `${"/svg/FullStar.svg"}`
-                              : i < elem.rating
-                              ? `${"/svg/HalfStar.svg"}`
-                              : `${"/svg/EmptyStar.svg"}`
-                          }
-                          alt="star"
-                          width={12}
-                          height={12}
-                        />
-                      </span>
-                    ))}
-                  </div>
-                  <div className={styles.card__price}>{elem.price} &#8381;</div>
-                </div>
-              ))
-            ) : (
-              <div>{error}</div>
-            )}
+            {items.map((item) => (
+              <SingleProduct key={item.id} {...item} />
+            ))}
           </div>
+          {error && <div>{error}</div>}
           <Pagination maxItems={200} maxItemToPage={15} />
         </>
       )}

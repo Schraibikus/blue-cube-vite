@@ -41,7 +41,18 @@ export const CartPage = () => {
   };
 
   const handleOrder = async () => {
-    removeEmptyItems();
+    const totalPrice = cart
+      ?.flat()
+      .reduce((sum, obj) => obj.product.price * obj.quantity + sum, 0);
+
+    if (totalPrice > 10000) {
+      toast.error(
+        "Общая сумма заказа превышает 10 000 руб, пожалуйста умерьте свои аппетиты"
+      );
+      return;
+    }
+
+    await removeEmptyItems();
     await new Promise((resolve) => setTimeout(resolve, 300));
     await dispatch(submitCart());
     await dispatch(clearCart());

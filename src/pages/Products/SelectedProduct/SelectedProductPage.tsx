@@ -3,7 +3,7 @@ import DOMPurify from "dompurify";
 
 import { Layout } from "../../../components/Layout";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import styles from "./SingleProductPage.module.scss";
+import styles from "./SelectedProductPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
 import { addToCartItems } from "../../../store/modules/cart/cartSlice";
@@ -11,7 +11,7 @@ import { getItem } from "../../../store/modules/items";
 import { Spinner } from "../../../components/Spinner";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-export const SingleProductPage = () => {
+export const SelectedProductPage = () => {
   const [parent] = useAutoAnimate();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -63,6 +63,7 @@ export const SingleProductPage = () => {
           />
           Назад
         </Link>
+
         {item ? (
           <>
             <div className={styles.product__top}>

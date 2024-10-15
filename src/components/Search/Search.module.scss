@@ -29,6 +29,10 @@
       top: 14px;
       right: 15px;
       cursor: pointer;
+
+      &:hover {
+        transform: scale(1.2);
+      }
     }
 
     & input {

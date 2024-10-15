@@ -1,1 +1,1 @@
-export const LIMIT_PAGES = 15;
+export const LIMIT_ITEMS_ON_PAGE = 15;

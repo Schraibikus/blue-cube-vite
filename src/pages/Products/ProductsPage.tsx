@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Layout } from "../../components/Layout";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -24,12 +24,16 @@ export const ProductsPage = () => {
   const error = useAppSelector((state) => state.items.error);
   const searchValue = useAppSelector((state) => state.items.searchValue);
 
+  const currentPage = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get("page");
+  }, [location.search]);
+
   useEffect(() => {
-    const currentPage = new URLSearchParams(location.search).get("page");
     if (currentPage) {
       dispatch(setPaginationPage(parseInt(currentPage)));
     }
-  }, [dispatch, location.search]);
+  }, [dispatch, currentPage]);
 
   useEffect(() => {
     dispatch(getItems(paginationPage));
@@ -41,6 +45,23 @@ export const ProductsPage = () => {
     params.set("page", paginationPage.toString());
     navigate({ search: params.toString() }, { replace: true });
   }, [paginationPage, navigate, location.search]);
+
+  const products = useMemo(() => {
+    if (searchValue) {
+      return <RenderSearchItems />;
+    }
+    return (
+      <>
+        <div className={styles.products} ref={parent}>
+          {items.map((item) => (
+            <SingleProduct key={item.id} {...item} />
+          ))}
+        </div>
+        {error && <div>{error}</div>}
+        <Pagination maxItems={200} maxItemToPage={15} />
+      </>
+    );
+  }, [searchValue, items, error]);
 
   if (isLoading) {
     return (
@@ -55,19 +76,7 @@ export const ProductsPage = () => {
   return (
     <Layout>
       <SearchInput />
-      {searchValue ? (
-        <RenderSearchItems />
-      ) : (
-        <>
-          <div className={styles.products} ref={parent}>
-            {items.map((item) => (
-              <SingleProduct key={item.id} {...item} />
-            ))}
-          </div>
-          {error && <div>{error}</div>}
-          <Pagination maxItems={200} maxItemToPage={15} />
-        </>
-      )}
+      {products}
     </Layout>
   );
 };

@@ -1,10 +1,13 @@
-import { LIMIT_PAGES } from "../../../utils/constants";
+import { LIMIT_ITEMS_ON_PAGE } from "../../../utils/constants";
 import { api } from "../../axios";
 
 export const fetchGetItems = async (page: number) => {
-  const { data } = await api.get(`products?page=${page}&limit=${LIMIT_PAGES}`, {
-    withCredentials: true,
-  });
+  const { data } = await api.get(
+    `products?page=${page}&limit=${LIMIT_ITEMS_ON_PAGE}`,
+    {
+      withCredentials: true,
+    }
+  );
   return data;
 };
 

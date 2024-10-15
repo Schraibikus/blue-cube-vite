@@ -35,29 +35,31 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCartItems(
+       addToCartItems(
       state,
       action: PayloadAction<{ id: Item["id"]; quantity: number }>
     ) {
       const { id, quantity } = action.payload;
-      if (state.cartItems) {
-        const existingCartItem = state.itemsToCart.find(
-          (item) => item.id === id
-        );
+      if (!state.cartItems) return;
+
+      const existingCartItem = state.itemsToCart.find((item) => item.id === id);
+
+      if (
+        quantity <= 0 &&
+        existingCartItem &&
+        existingCartItem?.quantity + quantity <= 0
+      ) {
+        state.itemsToCart = state.itemsToCart.filter((item) => item.id !== id);
+      } else if (quantity <= 0) {
+        return;
+      } else {
         if (existingCartItem) {
-          if (quantity > 0) {
-            existingCartItem.quantity += quantity;
-          } else if (existingCartItem.quantity + quantity <= 0) {
-            state.itemsToCart = state.itemsToCart.filter(
-              (item) => item.id !== id
-            );
-          } else {
-            existingCartItem.quantity += quantity;
-          }
-        } else if (quantity > 0) {
+          existingCartItem.quantity += quantity;
+        } else {
           state.itemsToCart.push({ id, quantity });
         }
       }
+
       toast.success("Товар добавлен в корзину!");
     },
     updateQuantity(

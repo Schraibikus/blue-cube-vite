@@ -1,4 +1,4 @@
-export default function getClubCountWordForm(count: number): string {
+export default function getCountWord(count: number): string {
   const lastDigit = count % 10;
   const lastTwoDigits = count % 100;
 

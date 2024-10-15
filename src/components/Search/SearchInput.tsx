@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
-import getClubCountWordForm from "../../utils/getAllClubCountWordForm";
+import getCountWord from "../../utils/getCountWord";
 // import { useEffect, useState } from "react";
 
 export const SearchInput = () => {
@@ -54,7 +54,7 @@ export const SearchInput = () => {
           {searchValue
             ? `Поиск по запросу: "${searchValue}", найдено: ${
                 filteredItems.length
-              } ${getClubCountWordForm(filteredItems.length)}`
+              } ${getCountWord(filteredItems.length)}`
             : "Все товары"}
         </h4>
         <div className={styles.search__block}>

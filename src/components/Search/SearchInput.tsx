@@ -4,38 +4,23 @@ import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
 import getCountWord from "../../utils/getCountWord";
-// import { useEffect, useState } from "react";
+import useDebouncedValue from "../../hooks/useDebounce";
+import { useEffect } from "react";
 
 export const SearchInput = () => {
-  // const useDebouncedValue = (value: string, delay: number) => {
-  //   const [debouncedValue, setDebouncedValue] = useState(value);
-
-  //   useEffect(() => {
-  //     const handler = setTimeout(() => {
-  //       setDebouncedValue(value);
-  //     }, delay);
-
-  //     return () => {
-  //       clearTimeout(handler);
-  //     };
-  //   }, [value, delay]);
-
-  //   return debouncedValue;
-  // };
-
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.items.searchValue);
   const foundItems = useAppSelector((state) => state.items.foundItems);
 
   // const debouncedSearch = useDebouncedValue(searchValue, 500);
 
-  const filteredItems = foundItems.filter((item) =>
-    item.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
-
   // useEffect(() => {
   //   dispatch(getSearchItems(debouncedSearch));
   // }, [dispatch, debouncedSearch]);
+
+  const filteredItems = foundItems.filter((item) =>
+    item.title.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   const handleInputChange = (event: { target: { value: string } }) => {
     dispatch(setSearchValue(event.target.value));

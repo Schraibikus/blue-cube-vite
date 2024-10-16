@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { fetchGetItemsCart, fetchAddItemCart, submitAddItemCart } from "./apis";
+import { fetchItemsCart, fetchAddItemCart, submitAddItemCart } from "./apis";
 import { Item } from "../items/types";
 import { toast } from "react-toastify";
 
 export const getItemsCart = createAsyncThunk("cart/getItemsCart", async () => {
   try {
-    const data = await fetchGetItemsCart();
+    const data = await fetchItemsCart();
     // console.log("cartItems", data);
     return data;
   } catch (error) {

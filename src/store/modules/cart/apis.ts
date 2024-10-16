@@ -1,7 +1,7 @@
 import { api } from "../../axios";
 import { Item } from "../items/types";
 
-export const fetchGetItemsCart = async () => {
+export const fetchItemsCart = async () => {
   const { data } = await api.get(`cart`);
   return data;
 };

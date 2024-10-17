@@ -7,7 +7,7 @@ import getCountWord from "../../utils/getCountWord";
 import useDebouncedValue from "../../hooks/useDebounce";
 import { useEffect } from "react";
 
-export const SearchInput = () => {
+export const SearchInput = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.items.searchValue);
   const foundItems = useAppSelector((state) => state.items.foundItems);

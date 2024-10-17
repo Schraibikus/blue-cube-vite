@@ -35,6 +35,7 @@
       }
     }
 
+    //стили для кнопки корзины, если корзина реализована не через модальное окно
     &__cart {
       display: flex;
       align-items: center;
@@ -56,6 +57,27 @@
         text-decoration-thickness: 3px;
         text-underline-offset: 8px;
         color: var(--brand);
+      }
+    }
+
+    //стили для кнопки корзины, если корзина реализована через модальное окно
+    &__button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 24px;
+      color: var(--black);
+      text-decoration: none;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--brand);
+      }
+
+      &:active {
+        color: var(--brand-light-1);
       }
     }
   }

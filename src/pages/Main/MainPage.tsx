@@ -1,7 +1,7 @@
 import { Layout } from "../../components/Layout";
 import styles from "./MainPage.module.scss";
 
-export const MainPage = () => {
+export const MainPage = (): JSX.Element => {
   return (
     <Layout>
       <img

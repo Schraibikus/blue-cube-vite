@@ -11,7 +11,7 @@ export const Pagination = ({
 }: {
   maxItems: number;
   maxItemToPage: number;
-}) => {
+}): JSX.Element => {
   const totalPages = Math.ceil(maxItems / maxItemToPage);
   const dispatch = useAppDispatch();
   const currentPageNumber = useAppSelector(

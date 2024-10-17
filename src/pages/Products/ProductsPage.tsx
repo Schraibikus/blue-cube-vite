@@ -13,7 +13,7 @@ import { RenderSearchItems } from "../../components/Search/RenderSearchItems";
 import { Spinner } from "../../components/Spinner";
 import { SingleProduct } from "./SingleProduct";
 
-export const ProductsPage = () => {
+export const ProductsPage = (): JSX.Element => {
   const [parent] = useAutoAnimate();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

@@ -5,7 +5,13 @@ import styles from "./SingleProduct.module.scss";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Item } from "../../../store/modules/items/types";
 
-export const SingleProduct = ({ id, title, picture, rating, price }: Item) => {
+export const SingleProduct = ({
+  id,
+  title,
+  picture,
+  rating,
+  price,
+}: Item): JSX.Element => {
   const [parent] = useAutoAnimate();
   const navigate = useNavigate();
 

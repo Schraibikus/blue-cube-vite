@@ -16,7 +16,7 @@ export const SingleOrderPage = ({
 }: {
   order: CartItem | CartItem[];
   idx: number;
-}) => {
+}): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [parent] = useAutoAnimate();

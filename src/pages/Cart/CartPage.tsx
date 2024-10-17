@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Layout } from "../../components/Layout";
@@ -8,18 +7,22 @@ import styles from "./CartPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { Spinner } from "../../components/Spinner";
-import { addItemCart } from "../../store/modules/cart";
+import { addItemCart, getItemsCart } from "../../store/modules/cart";
 import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
 import { clearCart, submitCart } from "../../store/modules/cart";
+import { toggleSetModal } from "../../store/modules/modal/modalSlice";
 
-export const CartPage = () => {
+export const CartPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [parent] = useAutoAnimate();
   const cart = useAppSelector((state) => state.cart.cartItems);
   const isLoading = useAppSelector((state) => state.cart.isLoading);
   const error = useAppSelector((state) => state.cart.error);
   const itemInCart = useAppSelector((state) => state.cart.itemsToCart);
+
+  useEffect(() => {
+    dispatch(getItemsCart());
+  }, [dispatch]);
 
   const handleQuantityChange = (id: string, quantity: number) => {
     dispatch(updateQuantity({ id, quantity }));
@@ -57,6 +60,7 @@ export const CartPage = () => {
     await dispatch(submitCart());
     await dispatch(clearCart());
     toast.success("Заказ успешно оформлен");
+    dispatch(toggleSetModal({ isOpen: false }));
     navigate("/products");
   };
 
@@ -71,7 +75,7 @@ export const CartPage = () => {
   if (isLoading) {
     return (
       <Layout>
-        <div className={styles.load__container} ref={parent}>
+        <div className={styles.load__container}>
           <Spinner />
         </div>
       </Layout>
@@ -81,7 +85,7 @@ export const CartPage = () => {
   return (
     <Layout>
       {cart.length ? (
-        <div className={styles.cart} ref={parent}>
+        <div className={styles.cart}>
           {cart.flat().map((item) => (
             <div key={item.product.id} className={styles.cart__item}>
               <img

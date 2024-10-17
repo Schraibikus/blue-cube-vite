@@ -10,8 +10,9 @@ import { addToCartItems } from "../../../store/modules/cart/cartSlice";
 import { getItem } from "../../../store/modules/items";
 import { Spinner } from "../../../components/Spinner";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import truncateText from "../../../utils/truncateText";
 
-export const SelectedProductPage = () => {
+export const SelectedProductPage = (): JSX.Element => {
   const [parent] = useAutoAnimate();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -77,7 +78,12 @@ export const SelectedProductPage = () => {
               />
               <div className={styles.product__top_right}>
                 <div>
-                  <h1 className={styles.product__title}>{item.title}</h1>
+                  <h1
+                    className={styles.product__title}
+                    title={`Товар: ${item.title}`}
+                  >
+                    {truncateText(item.title, 4)}
+                  </h1>
                   <div className={styles.product__rating}>
                     {[...Array(5)].map((_, i) => (
                       <span key={i} className={styles.product__rating_star}>
@@ -106,8 +112,14 @@ export const SelectedProductPage = () => {
                       type="button"
                       className={styles.product__button}
                       onClick={() => setIsOpen(true)}
+                      disabled={item.price > 10000}
+                      {...(item.price > 10000 && {
+                        title: "Извините, товар превышает стоимость 10000 руб.",
+                      })}
                     >
-                      Добавить в корзину
+                      {item.price > 10000
+                        ? "Извините, товар превышает стоимость 10000 руб."
+                        : "Добавить в корзину"}
                     </button>
                   )}
                   {isOpen && (

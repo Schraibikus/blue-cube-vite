@@ -6,7 +6,7 @@ const override = {
   borderColor: "red",
 };
 
-export const Spinner: () => JSX.Element = () => {
+export const Spinner = (): JSX.Element => {
   return (
     <div>
       <RiseLoader color="var(--brand)" cssOverride={override} size={30} />

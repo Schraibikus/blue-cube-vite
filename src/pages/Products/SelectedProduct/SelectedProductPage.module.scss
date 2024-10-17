@@ -181,6 +181,11 @@
       opacity: 0.8;
     }
 
+    &:disabled {
+      opacity: 0.4;
+      cursor: no-drop;
+    }
+
     &_order {
       width: 182px;
       border-radius: 12px;

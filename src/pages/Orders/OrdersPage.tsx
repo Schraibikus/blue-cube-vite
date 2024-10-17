@@ -10,8 +10,9 @@ import styles from "./OrdersPage.module.scss";
 import { CartItem } from "../../store/modules/cart/cartSlice";
 import { Pagination } from "../../components/Pagination";
 import { Spinner } from "../../components/Spinner";
+import { setPaginationPage } from "../../store/modules/pagination/paginationSlice";
 
-export const OrdersPage = () => {
+export const OrdersPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [parent] = useAutoAnimate();
   const orders = useAppSelector((state) => state.orders.orders);
@@ -24,6 +25,10 @@ export const OrdersPage = () => {
   const endItem = startItem + maxItemToPage;
 
   const currentPageOrders = orders.slice(startItem, endItem);
+
+  useEffect(() => {
+    dispatch(setPaginationPage(1));
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getOrders());

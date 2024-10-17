@@ -6,11 +6,12 @@ import { ProductsPage } from "./pages/Products";
 import { OrdersPage } from "./pages/Orders";
 import { CartPage } from "./pages/Cart";
 import { SelectedProductPage } from "./pages/Products/SelectedProduct";
-import ErrorBoundary from "./utils/ErrorBoundary";
+import { ModalWindow } from "./components/Modal";
 
-function App() {
+function App(): JSX.Element {
   return (
-    <ErrorBoundary>
+    <>
+      <ModalWindow />
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route index element={<MainPage />} />
@@ -20,7 +21,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </ErrorBoundary>
+    </>
   );
 }
 

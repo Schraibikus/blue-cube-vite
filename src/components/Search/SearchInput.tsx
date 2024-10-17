@@ -43,7 +43,7 @@ export const SearchInput = (): JSX.Element => {
             : "Все товары"}
         </h4>
         <div className={styles.search__block}>
-          <img src="/svg/search.svg" alt="Search" />
+          <img src="/svg/search.svg" alt="Search" width={20} height={20} />
           {searchValue && (
             <img
               className={styles.search__block_clear}

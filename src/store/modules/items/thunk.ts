@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
-  async (page: number) => {
+  async ({ page, limit }: { page: number; limit: number }) => {
     try {
-      const { data } = await fetchItems(page);
+      const { data } = await fetchItems(page, limit);
       return data;
     } catch (error) {
       if (error instanceof AxiosError) return toast.error(error.message);

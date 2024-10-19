@@ -4,8 +4,8 @@ import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
 import getCountWord from "../../utils/getCountWord";
-import useDebouncedValue from "../../hooks/useDebounce";
-import { useEffect } from "react";
+// import useDebouncedValue from "../../hooks/useDebounce";
+// import { useEffect } from "react";
 
 export const SearchInput = (): JSX.Element => {
   const dispatch = useAppDispatch();

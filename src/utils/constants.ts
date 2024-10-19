@@ -1,1 +1,2 @@
-export const LIMIT_ITEMS_ON_PAGE = 15;
+// при необходимости можно задействовать, чтобы заменить реализованную модель
+// export const LIMIT_ITEMS_ON_PAGE = 10;

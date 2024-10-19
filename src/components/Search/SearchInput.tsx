@@ -4,8 +4,8 @@ import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
 import getCountWord from "../../utils/getCountWord";
-import useDebouncedValue from "../../hooks/useDebounce";
-import { useEffect } from "react";
+// import useDebouncedValue from "../../hooks/useDebounce";
+// import { useEffect } from "react";
 
 export const SearchInput = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -43,7 +43,7 @@ export const SearchInput = (): JSX.Element => {
             : "Все товары"}
         </h4>
         <div className={styles.search__block}>
-          <img src="/svg/search.svg" alt="Search" />
+          <img src="/svg/search.svg" alt="Search" width={20} height={20} />
           {searchValue && (
             <img
               className={styles.search__block_clear}

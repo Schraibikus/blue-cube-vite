@@ -31,3 +31,67 @@
     grid-template-columns: 250px;
   }
 }
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  user-select: none;
+  padding: 0 32px 24px 32px;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand);
+    background-color: var(--brand-light-2);
+    border: none;
+    cursor: pointer;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+
+    &_active {
+      background-color: var(--brand);
+      color: var(--white);
+    }
+
+    &:hover {
+      background-color: var(--brand-light-1);
+    }
+
+    &_active {
+      background-color: var(--brand);
+      color: var(--white);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: no-drop;
+    }
+  }
+
+  &__input {
+    border: 3px solid var(--brand-light-1);
+    border-radius: 10px;
+    padding: 0 15px;
+    position: relative;
+    align-items: center;
+    outline: none;
+    background-color: var(--white);
+    padding: 13px;
+    font-size: 16px;
+    width: 356px;
+    outline: none;
+
+    &:focus-within {
+      border: 3px solid var(--brand);
+    }
+  }
+}
+
+// input {
+//   display: flex;
+//   border: 3px solid var(--brand);
+// }

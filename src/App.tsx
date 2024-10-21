@@ -7,11 +7,13 @@ import { OrdersPage } from "./pages/Orders";
 import { CartPage } from "./pages/Cart";
 import { SelectedProductPage } from "./pages/Products/SelectedProduct";
 import { ModalWindow } from "./components/Modal";
+import { TemporaryDrawer } from "./components/Modal/Drawer";
 
 function App(): JSX.Element {
   return (
     <>
       <ModalWindow />
+      <TemporaryDrawer />
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route index element={<MainPage />} />

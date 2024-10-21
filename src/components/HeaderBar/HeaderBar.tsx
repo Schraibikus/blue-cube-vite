@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { toggleSetModal } from "../../store/modules/modal/modalSlice";
+import {
+  toggleSetDrawer,
+  toggleSetModal,
+} from "../../store/modules/modal/modalSlice";
 import styles from "./HeaderBar.module.scss";
 import { Link, NavLink } from "react-router-dom";
 

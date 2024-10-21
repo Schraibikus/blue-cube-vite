@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { getItem, getItems, getSearchItems } from "./";
+import { getItem, getItems, getMoreItems, getSearchItems } from "./";
 import { Item } from "./types";
 
 type ItemsState = {
@@ -10,6 +10,7 @@ type ItemsState = {
   error: string | null;
   searchValue: string;
   foundItems: Item[];
+  totalItems: number;
 };
 
 const initialState: ItemsState = {
@@ -27,6 +28,7 @@ const initialState: ItemsState = {
   error: null,
   searchValue: "",
   foundItems: [],
+  totalItems: 200,
 };
 
 const itemsSlice = createSlice({
@@ -47,9 +49,27 @@ const itemsSlice = createSlice({
         state.isLoading = false;
         if (Array.isArray(action.payload)) {
           state.itemsList = action.payload;
+          // state.itemsList = [...state.itemsList, ...action.payload];
         }
       })
       .addCase(getItems.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Failed to fetch items";
+      })
+      .addCase(getMoreItems.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        getMoreItems.fulfilled,
+        (state, action: PayloadAction<Item[]>) => {
+          state.isLoading = false;
+          if (Array.isArray(action.payload)) {
+            state.itemsList = [...state.itemsList, ...action.payload];
+          }
+        }
+      )
+      .addCase(getMoreItems.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch items";
       })

@@ -3,7 +3,9 @@ import { Layout } from "../../components/Layout";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import styles from "./ProductsPage.module.scss";
-import { getItems, getMoreItems } from "../../store/modules/items";
+import { getItems } from "../../store/modules/items";
+// import { getMoreItems } from "../../store/modules/items";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { setPaginationPage } from "../../store/modules/pagination/paginationSlice";
 

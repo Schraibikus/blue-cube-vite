@@ -43,15 +43,11 @@
   background-color: var(--brand-light-2);
   border: none;
   cursor: pointer;
+  width: 52px;
   height: 52px;
   border-radius: 12px;
 
   &:hover {
     background-color: var(--brand-light-1);
-  }
-
-  &_active {
-    background-color: var(--brand);
-    color: var(--white);
   }
 }

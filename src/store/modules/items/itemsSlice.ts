@@ -11,6 +11,7 @@ type ItemsState = {
   searchValue: string;
   foundItems: Item[];
   totalItems: number;
+  limitTotalPrice: number;
 };
 
 const initialState: ItemsState = {
@@ -29,6 +30,7 @@ const initialState: ItemsState = {
   searchValue: "",
   foundItems: [],
   totalItems: 200,
+  limitTotalPrice: 10000,
 };
 
 const itemsSlice = createSlice({
@@ -37,6 +39,9 @@ const itemsSlice = createSlice({
   reducers: {
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
+    },
+    setLimitTotalPrice(state, action: PayloadAction<number>) {
+      state.limitTotalPrice = action.payload;
     },
   },
   extraReducers(builder) {
@@ -105,5 +110,5 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { setSearchValue } = itemsSlice.actions;
+export const { setSearchValue, setLimitTotalPrice } = itemsSlice.actions;
 export default itemsSlice.reducer;

@@ -6,11 +6,21 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./SelectedProductPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
-import { addToCartItems } from "../../../store/modules/cart/cartSlice";
+import {
+  addToCartItems,
+  updateQuantity,
+} from "../../../store/modules/cart/cartSlice";
 import { getItem } from "../../../store/modules/items";
 import { Spinner } from "../../../components/Spinner";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import truncateText from "../../../utils/truncateText";
+import { toast } from "react-toastify";
+import {
+  addItemCart,
+  clearCart,
+  submitCart,
+} from "../../../store/modules/cart";
+import { toggleSetModal } from "../../../store/modules/modal/modalSlice";
 
 export const SelectedProductPage = (): JSX.Element => {
   const [parent] = useAutoAnimate();
@@ -27,6 +37,8 @@ export const SelectedProductPage = (): JSX.Element => {
   const limitTotalPrice = useAppSelector(
     (state) => state.items.limitTotalPrice
   );
+  const cart = useAppSelector((state) => state.cart.cartItems);
+  const itemInCart = useAppSelector((state) => state.cart.itemsToCart);
 
   const addToCart = (id: string, quantity: number) => {
     if (quantity > 0) {
@@ -34,14 +46,49 @@ export const SelectedProductPage = (): JSX.Element => {
     }
   };
 
+  const handleQuantityChange = (id: string, quantity: number) => {
+    dispatch(updateQuantity({ id, quantity }));
+    if (quantity > 1) {
+      toast.info("Количество товара изменено");
+    }
+  };
+
+  useEffect(() => {
+    handleQuantityChange(productId ?? "", quantity);
+  }, [productId, quantity]);
+
   useEffect(() => {
     if (productId) {
       dispatch(getItem(productId));
     }
   }, [productId, dispatch]);
 
+  useEffect(() => {
+    dispatch(addItemCart(itemInCart));
+  }, [dispatch, itemInCart]);
+
   const handleAddToCart = () => {
+    setIsOpen(true);
     addToCart(productId ?? "", quantity);
+  };
+
+  const handleOrder = async () => {
+    const totalPrice = cart
+      ?.flat()
+      .reduce((sum, obj) => obj.product.price * obj.quantity + sum, 0);
+
+    if (totalPrice > limitTotalPrice) {
+      toast.error(
+        `Общая сумма заказа превышает ${limitTotalPrice} руб, пожалуйста умерьте свои аппетиты`
+      );
+      return;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await dispatch(submitCart());
+    await dispatch(clearCart());
+    toast.success("Заказ успешно оформлен");
+    dispatch(toggleSetModal({ isOpen: false }));
     navigate("/products");
   };
 
@@ -114,7 +161,7 @@ export const SelectedProductPage = (): JSX.Element => {
                     <button
                       type="button"
                       className={styles.product__button}
-                      onClick={() => setIsOpen(true)}
+                      onClick={() => handleAddToCart()}
                       disabled={item.price > limitTotalPrice}
                       {...(item.price > limitTotalPrice && {
                         title: `Извините, товар превышает стоимость ${limitTotalPrice} руб.`,
@@ -173,7 +220,7 @@ export const SelectedProductPage = (): JSX.Element => {
                       <button
                         type="button"
                         className={styles.product__button_order}
-                        onClick={() => handleAddToCart()}
+                        onClick={handleOrder}
                         disabled={quantity === 0 || quantity > 10}
                       >
                         Оформить заказ

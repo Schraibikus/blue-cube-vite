@@ -6,7 +6,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./SelectedProductPage.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import replaceImage from "../../../utils/replaceImage";
-import { addToCartItems } from "../../../store/modules/cart/cartSlice";
+import {
+  addToCartItems,
+  updateQuantity,
+} from "../../../store/modules/cart/cartSlice";
 import { getItem } from "../../../store/modules/items";
 import { Spinner } from "../../../components/Spinner";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -42,6 +45,17 @@ export const SelectedProductPage = (): JSX.Element => {
       dispatch(addToCartItems({ id, quantity }));
     }
   };
+
+  const handleQuantityChange = (id: string, quantity: number) => {
+    dispatch(updateQuantity({ id, quantity }));
+    if (quantity > 1) {
+      toast.info("Количество товара изменено");
+    }
+  };
+
+  useEffect(() => {
+    handleQuantityChange(productId ?? "", quantity);
+  }, [productId, quantity]);
 
   useEffect(() => {
     if (productId) {

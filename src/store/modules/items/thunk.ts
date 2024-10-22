@@ -15,6 +15,18 @@ export const getItems = createAsyncThunk(
   }
 );
 
+export const getMoreItems = createAsyncThunk(
+  "items/getMoreItems",
+  async ({ page, limit }: { page: number; limit: number }) => {
+    try {
+      const { data } = await fetchItems(page, limit);
+      return data;
+    } catch (error) {
+      if (error instanceof AxiosError) return toast.error(error.message);
+    }
+  }
+);
+
 export const getItem = createAsyncThunk(
   "items/getItem",
   async (productId: string) => {

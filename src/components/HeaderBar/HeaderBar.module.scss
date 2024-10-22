@@ -4,6 +4,9 @@
   .header {
     width: 100%;
     background-color: var(--brand-light-3);
+    position: fixed;
+    top: 0;
+    z-index: 50;
     height: 48px;
     display: flex;
     align-items: center;
@@ -12,6 +15,39 @@
     font-weight: 700;
     border-bottom: 1px solid var(--brand-light-2);
     user-select: none;
+
+    &__logo {
+      display: block;
+
+      &.invisible {
+        display: none;
+      }
+    }
+
+    &__back_button {
+      display: none;
+      cursor: pointer;
+      color: var(--brand);
+      background-color: transparent;
+      border: none;
+      transition: color 0.3s;
+      z-index: 10;
+
+      &:hover {
+        transform: scale(0.9);
+      }
+
+      &:active {
+        transform: scale(1.1);
+      }
+
+      &.visible {
+        display: flex;
+        width: 150px;
+        align-items: center;
+        gap: 8px;
+      }
+    }
 
     &__navigation {
       display: flex;

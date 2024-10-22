@@ -24,6 +24,9 @@ export const SelectedProductPage = (): JSX.Element => {
   const item = useAppSelector((state) => state.items.item);
   const isLoading = useAppSelector((state) => state.items.isLoading);
   const error = useAppSelector((state) => state.items.error);
+  const limitTotalPrice = useAppSelector(
+    (state) => state.items.limitTotalPrice
+  );
 
   const addToCart = (id: string, quantity: number) => {
     if (quantity > 0) {
@@ -112,13 +115,13 @@ export const SelectedProductPage = (): JSX.Element => {
                       type="button"
                       className={styles.product__button}
                       onClick={() => setIsOpen(true)}
-                      disabled={item.price > 10000}
-                      {...(item.price > 10000 && {
-                        title: "Извините, товар превышает стоимость 10000 руб.",
+                      disabled={item.price > limitTotalPrice}
+                      {...(item.price > limitTotalPrice && {
+                        title: `Извините, товар превышает стоимость ${limitTotalPrice} руб.`,
                       })}
                     >
-                      {item.price > 10000
-                        ? "Извините, товар превышает стоимость 10000 руб."
+                      {item.price > limitTotalPrice
+                        ? `Извините, товар превышает стоимость ${limitTotalPrice} руб.`
                         : "Добавить в корзину"}
                     </button>
                   )}

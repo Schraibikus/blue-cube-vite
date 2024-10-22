@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleSetModal } from "../../store/modules/modal/modalSlice";
 import styles from "./HeaderBar.module.scss";
@@ -7,13 +8,51 @@ export const HeaderBar = (): JSX.Element => {
   const cartCount = useAppSelector((state) => state.cart.itemsToCart.length);
   const dispatch = useAppDispatch();
   const handleOpenModal = () => dispatch(toggleSetModal({ isOpen: true }));
+  const [isBackButtonVisible, setIsBackButtonVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition =
+        window.scrollY || document.documentElement.scrollTop;
+      if (scrollPosition >= 100) {
+        setIsBackButtonVisible(true);
+      } else {
+        setIsBackButtonVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <Link to="/">
+        <Link
+          to="/"
+          className={`${styles.header__logo} ${
+            isBackButtonVisible ? styles.invisible : ""
+          }`}
+        >
           <img src="/svg/brand.svg" alt="logo" width={150} height={24} />
         </Link>
+        <button
+          className={`${styles.header__back_button} ${
+            isBackButtonVisible ? styles.visible : ""
+          }`}
+          type="button"
+          onClick={() => window.scrollTo(0, 0)}
+        >
+          <img
+            src="/svg/arrow-left.svg"
+            alt="up"
+            style={{ transform: "rotate(90deg)" }}
+          />
+          Наверх
+        </button>
         <div className={styles.header__navigation}>
           <NavLink
             to="/products"

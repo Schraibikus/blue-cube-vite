@@ -19,6 +19,9 @@ export const CartPage = (): JSX.Element => {
   const isLoading = useAppSelector((state) => state.cart.isLoading);
   const error = useAppSelector((state) => state.cart.error);
   const itemInCart = useAppSelector((state) => state.cart.itemsToCart);
+  const limitTotalPrice = useAppSelector(
+    (state) => state.items.limitTotalPrice
+  );
 
   useEffect(() => {
     dispatch(getItemsCart());
@@ -48,9 +51,9 @@ export const CartPage = (): JSX.Element => {
       ?.flat()
       .reduce((sum, obj) => obj.product.price * obj.quantity + sum, 0);
 
-    if (totalPrice > 10000) {
+    if (totalPrice > limitTotalPrice) {
       toast.error(
-        "Общая сумма заказа превышает 10 000 руб, пожалуйста умерьте свои аппетиты"
+        `Общая сумма заказа превышает ${limitTotalPrice} руб, пожалуйста умерьте свои аппетиты`
       );
       return;
     }

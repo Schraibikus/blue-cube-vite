@@ -113,13 +113,15 @@ export const ProductsPage = (): JSX.Element => {
 
   return (
     <Layout>
-      <button
-        className={styles.drawer__open}
-        onClick={() => dispatch(toggleSetDrawer({ isOpenDrawer: true }))}
-      >
-        <img src="/svg/FullStar.svg" alt="drawer" width={30} />
-      </button>
-      <SearchInput />
+      <div className={styles.products__header}>
+        <SearchInput />
+        <button
+          className={styles.drawer__open}
+          onClick={() => dispatch(toggleSetDrawer({ isOpenDrawer: true }))}
+        >
+          <img src="/svg/FullStar.svg" alt="drawer" width={30} />
+        </button>
+      </div>
       {products}
     </Layout>
   );

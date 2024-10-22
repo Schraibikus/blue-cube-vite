@@ -15,6 +15,12 @@
   font-family: var(--font-family-base);
   font-weight: 400;
 
+  &__header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+
   @media (max-width: 1400px) {
     grid-template-columns: repeat(4, 250px);
   }
@@ -33,9 +39,7 @@
 }
 
 .drawer__open {
-  position: absolute;
-  top: 20px;
-  left: 32px;
+  margin-right: 24px;
   display: flex;
   align-items: center;
   justify-content: center;

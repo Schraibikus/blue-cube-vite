@@ -53,15 +53,18 @@
       align-items: center;
       outline: none;
       background-color: var(--white);
+      color: var(--brand);
+      font-size: 20px;
     }
   }
 
   &__close {
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: center;
     color: var(--brand);
-    background-color: var(--brand-light-2);
+    background-color: transparent;
     border: none;
     cursor: pointer;
     width: 52px;
@@ -70,7 +73,11 @@
     margin-bottom: 50px;
 
     &:hover {
-      background-color: #fabc22;
+      transform: scale(0.9);
+    }
+
+    &:active {
+      transform: scale(1.1);
     }
   }
 

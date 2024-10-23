@@ -50,6 +50,7 @@
   width: 52px;
   height: 52px;
   border-radius: 12px;
+  transform: rotate(90deg);
 
   &:hover {
     background-color: var(--brand-light-1);

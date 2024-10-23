@@ -1,7 +1,10 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleSetDrawer } from "../../store/modules/modal/modalSlice";
 import { useMemo } from "react";
-import { setItemsOnPage } from "../../store/modules/pagination/paginationSlice";
+import {
+  setItemsOnPage,
+  toggleInfiniteScroll,
+} from "../../store/modules/pagination/paginationSlice";
 import styles from "./Drawer.module.scss";
 import { DebounceInput } from "react-debounce-input";
 import { setLimitTotalPrice } from "../../store/modules/items/itemsSlice";
@@ -9,9 +12,15 @@ import { setLimitTotalPrice } from "../../store/modules/items/itemsSlice";
 export const TemporaryDrawer = () => {
   const dispatch = useAppDispatch();
   const isOpenDrawer = useAppSelector((state) => state.modal.isOpenDrawer);
-
   const page = useAppSelector((state) => state.pagination.itemsPerPage);
   const itemsPerPage = useMemo(() => page, [page]);
+  const isInfinite = useAppSelector(
+    (state) => state.pagination.isInfiniteScroll
+  );
+
+  const handleInfiniteScroll = () => {
+    dispatch(toggleInfiniteScroll({ isInfiniteScroll: !isInfinite }));
+  };
 
   const limitTotalPrice = useAppSelector(
     (state) => state.items.limitTotalPrice
@@ -36,47 +45,55 @@ export const TemporaryDrawer = () => {
     >
       <div className={styles.container}>
         <button className={styles.container__close} onClick={handleCloseDrawer}>
-          <img src="/svg/EmptyStar.svg" alt="Clear" width={30} height={30} />
+          <img
+            src="/svg/arrow-left.svg"
+            width={20}
+            height={20}
+            alt="arrow left"
+          />
+          Назад
         </button>
-        <div className={styles.container__header}>
-          <h2 className={styles.container__title}>
-            Количество товаров на странице
-          </h2>
-          <div className={styles.container__buttons}>
-            <button
-              className={`${styles.container__button} ${
-                itemsPerPage === 10 ? styles.container__button_active : ""
-              }`}
-              onClick={() => handlePageChange(10)}
-            >
-              10
-            </button>
-            <button
-              className={`${styles.container__button} ${
-                itemsPerPage === 15 ? styles.container__button_active : ""
-              }`}
-              onClick={() => handlePageChange(15)}
-            >
-              15
-            </button>
-            <button
-              className={`${styles.container__button} ${
-                itemsPerPage === 20 ? styles.container__button_active : ""
-              }`}
-              onClick={() => handlePageChange(20)}
-            >
-              20
-            </button>
-            <button
-              className={`${styles.container__button} ${
-                itemsPerPage === 30 ? styles.container__button_active : ""
-              }`}
-              onClick={() => handlePageChange(30)}
-            >
-              30
-            </button>
+        {!isInfinite && (
+          <div className={styles.container__header}>
+            <h2 className={styles.container__title}>
+              Количество товаров на странице
+            </h2>
+            <div className={styles.container__buttons}>
+              <button
+                className={`${styles.container__button} ${
+                  itemsPerPage === 10 ? styles.container__button_active : ""
+                }`}
+                onClick={() => handlePageChange(10)}
+              >
+                10
+              </button>
+              <button
+                className={`${styles.container__button} ${
+                  itemsPerPage === 15 ? styles.container__button_active : ""
+                }`}
+                onClick={() => handlePageChange(15)}
+              >
+                15
+              </button>
+              <button
+                className={`${styles.container__button} ${
+                  itemsPerPage === 20 ? styles.container__button_active : ""
+                }`}
+                onClick={() => handlePageChange(20)}
+              >
+                20
+              </button>
+              <button
+                className={`${styles.container__button} ${
+                  itemsPerPage === 30 ? styles.container__button_active : ""
+                }`}
+                onClick={() => handlePageChange(30)}
+              >
+                30
+              </button>
+            </div>
           </div>
-        </div>
+        )}
         <div className={styles.container__limit}>
           <h4 className={styles.container__title}>Лимит на покупки</h4>
           <DebounceInput
@@ -87,6 +104,18 @@ export const TemporaryDrawer = () => {
             value={limitTotalPrice}
             placeholder="Поиск..."
           />
+        </div>
+        <div className={styles.container__limit}>
+          <h4 className={styles.container__title}>Бесконечный скролл</h4>
+          <button
+            style={{ fontSize: "40px" }}
+            className={`${styles.container__button} ${
+              isInfinite ? styles.container__button_active : ""
+            }`}
+            onClick={handleInfiniteScroll}
+          >
+            &#8734;
+          </button>
         </div>
       </div>
     </div>

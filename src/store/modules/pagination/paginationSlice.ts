@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 type PaginationState = {
   pagination: number;
   itemsPerPage: number;
+  isInfiniteScroll: boolean;
 };
 
 const initialState: PaginationState = {
   pagination: 1,
   itemsPerPage: 15,
+  isInfiniteScroll: false,
 };
 
 const paginationSlice = createSlice({
@@ -26,9 +28,20 @@ const paginationSlice = createSlice({
     setItemsOnPage(state, action: PayloadAction<number>) {
       state.itemsPerPage = action.payload;
     },
+    toggleInfiniteScroll(
+      state,
+      action: PayloadAction<{ isInfiniteScroll: boolean }>
+    ) {
+      state.isInfiniteScroll = action.payload.isInfiniteScroll;
+    },
   },
 });
 
-export const { nextPage, currentPage, setPaginationPage, setItemsOnPage } =
-  paginationSlice.actions;
+export const {
+  nextPage,
+  currentPage,
+  setPaginationPage,
+  setItemsOnPage,
+  toggleInfiniteScroll,
+} = paginationSlice.actions;
 export default paginationSlice.reducer;

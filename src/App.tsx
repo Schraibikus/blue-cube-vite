@@ -8,8 +8,13 @@ import { CartPage } from "./pages/Cart";
 import { SelectedProductPage } from "./pages/Products/SelectedProduct";
 import { ModalWindow } from "./components/Modal";
 import { TemporaryDrawer } from "./components/Drawer";
+import { InfiniteScroll } from "./pages/Products/InfiniteScroll";
+import { useAppSelector } from "./hooks/redux";
 
 function App(): JSX.Element {
+  const isInfiniteScroll = useAppSelector(
+    (state) => state.pagination.isInfiniteScroll
+  );
   return (
     <>
       <ModalWindow />
@@ -17,7 +22,13 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route index element={<MainPage />} />
-        <Route path="/products" element={<ProductsPage />} />
+        {/* <Route path="/products" element={<ProductsPage />} /> */}
+        {isInfiniteScroll ? (
+          <Route path="/products" element={<InfiniteScroll />} />
+        ) : (
+          <Route path="/products" element={<ProductsPage />} />
+        )}
+        {/* <Route path="/products" element={<InfiniteScroll />} /> */}
         <Route path="/products/:productId" element={<SelectedProductPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/cart" element={<CartPage />} />

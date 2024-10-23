@@ -22,13 +22,11 @@ function App(): JSX.Element {
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route index element={<MainPage />} />
-        {/* <Route path="/products" element={<ProductsPage />} /> */}
         {isInfiniteScroll ? (
           <Route path="/products" element={<InfiniteScroll />} />
         ) : (
           <Route path="/products" element={<ProductsPage />} />
         )}
-        {/* <Route path="/products" element={<InfiniteScroll />} /> */}
         <Route path="/products/:productId" element={<SelectedProductPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/cart" element={<CartPage />} />

@@ -98,7 +98,7 @@ export const TemporaryDrawer = () => {
           <h4 className={styles.container__title}>Лимит на покупки</h4>
           <DebounceInput
             className={styles.container__limit_input}
-            minLength={3} // минимальная длина ввода перед тем, как будет вызвана функция handleInputChange
+            minLength={4} // минимальная длина ввода перед тем, как будет вызвана функция handleInputChange
             debounceTimeout={1000} // задержка перед тем, как будет вызвана функция handleInputChange
             onChange={handleInputChange}
             value={limitTotalPrice}

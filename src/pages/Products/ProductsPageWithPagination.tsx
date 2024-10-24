@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -29,6 +29,8 @@ export const ProductsPageWithPagination = (): JSX.Element => {
   const itemsPerPage = useMemo(() => page, [page]);
   const totalItems = useAppSelector((state) => state.items.totalItems);
 
+  const [sortValue, setSortValue] = useState("");
+
   const currentPage = useMemo(() => {
     const params = new URLSearchParams(location.search);
     return params.get("page");
@@ -51,14 +53,43 @@ export const ProductsPageWithPagination = (): JSX.Element => {
     navigate({ search: params.toString() }, { replace: true });
   }, [paginationPage, navigate, location.search]);
 
+  // const products = useMemo(() => {
+  //   if (searchValue) {
+  //     return <RenderSearchItems />;
+  //   }
+  //   return (
+  //     <>
+  //       <div className={styles.products} ref={parent}>
+  //         {items.map((item) => (
+  //           <SingleProduct key={item.id} {...item} />
+  //         ))}
+  //       </div>
+  //       {error && <div>{error}</div>}
+  //       <Pagination maxItems={totalItems} maxItemToPage={itemsPerPage} />
+  //     </>
+  //   );
+  // }, [searchValue, items, error]);
   const products = useMemo(() => {
     if (searchValue) {
       return <RenderSearchItems />;
     }
+    const sortedItems = [...items].sort((a, b) => {
+      if (sortValue === "price") {
+        return a.price - b.price;
+      } else if (sortValue === "rating") {
+        return b.rating - a.rating;
+      } else if (sortValue === "-price") {
+        return b.price - a.price;
+      } else if (sortValue === "-rating") {
+        return a.rating - b.rating;
+      } else {
+        return 0;
+      }
+    });
     return (
       <>
         <div className={styles.products} ref={parent}>
-          {items.map((item) => (
+          {sortedItems.map((item) => (
             <SingleProduct key={item.id} {...item} />
           ))}
         </div>
@@ -66,7 +97,7 @@ export const ProductsPageWithPagination = (): JSX.Element => {
         <Pagination maxItems={totalItems} maxItemToPage={itemsPerPage} />
       </>
     );
-  }, [searchValue, items, error]);
+  }, [searchValue, items, error, sortValue]);
 
   if (isLoading) {
     return (
@@ -81,6 +112,18 @@ export const ProductsPageWithPagination = (): JSX.Element => {
   return (
     <Layout>
       <div className={styles.products__header}>
+        <div className={styles.products__header_sort}>
+          <h4>Критерий сортировки</h4>
+          <select
+            className={styles.products__header_sort_select}
+            onChange={(e) => setSortValue(e.target.value)}
+          >
+            <option value="price">Сначала дешевле</option>
+            <option value="-price">Сначала дороже</option>
+            <option value="rating">Рейтинг выше</option>
+            <option value="-rating">Рейтинг ниже</option>
+          </select>
+        </div>
         <SearchInput />
         <button
           className={styles.drawer__open}

@@ -23,6 +23,10 @@
     outline: none;
     background-color: var(--white);
 
+    &:hover {
+      border: 3px solid var(--brand);
+    }
+
     &:focus-within {
       border: 3px solid var(--brand);
     }

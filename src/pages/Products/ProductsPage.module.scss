@@ -19,6 +19,43 @@
     display: flex;
     justify-content: end;
     align-items: center;
+
+    &_sort {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 32px;
+
+      & h4 {
+        margin: 0;
+      }
+
+      &_select {
+        border: 3px solid var(--brand-light-1);
+        border-radius: 10px;
+        outline: none;
+        padding: 13px;
+        font-size: 16px;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        appearance: none;
+
+        & option:checked {
+          background-color: var(--brand-light-2);
+        }
+
+        &:hover {
+          border: 3px solid var(--brand);
+          color: var(--brand);
+        }
+
+        &:focus-within {
+          border: 3px solid var(--brand);
+          color: var(--brand);
+        }
+      }
+    }
   }
 
   @media (max-width: 1400px) {

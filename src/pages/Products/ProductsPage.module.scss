@@ -19,12 +19,13 @@
     display: flex;
     justify-content: end;
     align-items: center;
+    margin-inline: 32px;
 
     &_sort {
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 20px 32px;
+      padding: 20px 5px 20px 32px;
 
       & h4 {
         margin: 0;
@@ -76,7 +77,6 @@
 }
 
 .drawer__open {
-  margin-right: 24px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -17,18 +17,23 @@ const paginationSlice = createSlice({
   initialState,
   reducers: {
     nextPage(state, action: PayloadAction<number>) {
+      // переход на следующую страницу
       state.pagination += action.payload;
     },
     currentPage(state, action: PayloadAction<number>) {
+      // переход на текущую страницу
       state.pagination = action.payload + 1;
     },
     setPaginationPage(state, action: PayloadAction<number>) {
+      // переход на определенную страницу
       state.pagination = action.payload;
     },
     setItemsOnPage(state, action: PayloadAction<number>) {
+      // установка количества товаров на странице
       state.itemsPerPage = action.payload;
     },
     toggleInfiniteScroll(
+      // включение/выключение бесконечного скролла
       state,
       action: PayloadAction<{ isInfiniteScroll: boolean }>
     ) {

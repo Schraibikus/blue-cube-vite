@@ -2,13 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { MainPage } from "./pages/Main";
 import { NotFoundPage } from "./pages/NotFound/NotFoundPage";
-import { ProductsPage } from "./pages/Products";
+import { ProductsPageWithPagination } from "./pages/Products";
+import { ProductsPageWithInfiniteScroll } from "./pages/Products";
+import { SelectedProductPage } from "./pages/Products/SelectedProduct";
 import { OrdersPage } from "./pages/Orders";
 import { CartPage } from "./pages/Cart";
-import { SelectedProductPage } from "./pages/Products/SelectedProduct";
 import { ModalWindow } from "./components/Modal";
-import { TemporaryDrawer } from "./components/Drawer";
-import { InfiniteScroll } from "./pages/Products/InfiniteScroll";
+import { Drawer } from "./components/Drawer";
 import { useAppSelector } from "./hooks/redux";
 
 function App(): JSX.Element {
@@ -18,14 +18,17 @@ function App(): JSX.Element {
   return (
     <>
       <ModalWindow />
-      <TemporaryDrawer />
+      <Drawer />
       <Routes>
         <Route path="/" element={<Layout />} />
         <Route index element={<MainPage />} />
-        {isInfiniteScroll ? (
-          <Route path="/products" element={<InfiniteScroll />} />
+        {isInfiniteScroll ? ( // Бесконечный скролл или пагинация
+          <Route
+            path="/products"
+            element={<ProductsPageWithInfiniteScroll />}
+          />
         ) : (
-          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products" element={<ProductsPageWithPagination />} />
         )}
         <Route path="/products/:productId" element={<SelectedProductPage />} />
         <Route path="/orders" element={<OrdersPage />} />

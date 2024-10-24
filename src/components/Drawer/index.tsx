@@ -1,1 +1,1 @@
-export { TemporaryDrawer } from "./Drawer";
+export { Drawer } from "./Drawer";

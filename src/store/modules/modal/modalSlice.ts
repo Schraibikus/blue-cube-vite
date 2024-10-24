@@ -15,9 +15,11 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     toggleSetModal(state, action: PayloadAction<{ isOpen: boolean }>) {
+      //открытие модалки
       state.isOpen = action.payload.isOpen;
     },
     toggleSetDrawer(state, action: PayloadAction<{ isOpenDrawer: boolean }>) {
+      //открытие дропдауна
       state.isOpenDrawer = action.payload.isOpenDrawer;
     },
   },

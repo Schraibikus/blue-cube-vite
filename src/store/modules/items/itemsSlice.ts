@@ -37,16 +37,16 @@ const itemsSlice = createSlice({
   name: "items",
   initialState,
   reducers: {
-    setSearchValue(state, action: PayloadAction<string>) {
+    setSearchValue(state, action: PayloadAction<string>) { //поиск
       state.searchValue = action.payload;
     },
-    setLimitTotalPrice(state, action: PayloadAction<number>) {
+    setLimitTotalPrice(state, action: PayloadAction<number>) { //лимит затрат на покупки
       state.limitTotalPrice = action.payload;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(getItems.pending, (state) => {
+      .addCase(getItems.pending, (state) => { //получаем все товары (с пагинацией)
         state.isLoading = true;
         state.error = null;
       })
@@ -54,14 +54,13 @@ const itemsSlice = createSlice({
         state.isLoading = false;
         if (Array.isArray(action.payload)) {
           state.itemsList = action.payload;
-          // state.itemsList = [...state.itemsList, ...action.payload];
         }
       })
       .addCase(getItems.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch items";
       })
-      .addCase(getMoreItems.pending, (state) => {
+      .addCase(getMoreItems.pending, (state) => { //получаем все товары (бесконечный скролл)
         state.isLoading = true;
         state.error = null;
       })
@@ -78,7 +77,7 @@ const itemsSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch items";
       })
-      .addCase(getItem.pending, (state) => {
+      .addCase(getItem.pending, (state) => { //получаем один товар по id
         state.isLoading = true;
         state.error = null;
       })
@@ -90,7 +89,7 @@ const itemsSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message || "Failed to fetch item";
       })
-      .addCase(getSearchItems.pending, (state) => {
+      .addCase(getSearchItems.pending, (state) => { // получаем товары по поисковому запросу
         state.isLoading = true;
         state.error = null;
       })

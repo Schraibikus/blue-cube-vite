@@ -12,7 +12,7 @@ import { Spinner } from "../../components/Spinner";
 import { SingleProduct } from "./SingleProduct";
 import { toggleSetDrawer } from "../../store/modules/modal/modalSlice";
 
-export const InfiniteScroll = (): JSX.Element => {
+export const ProductsPageWithInfiniteScroll = (): JSX.Element => {
   const [parent] = useAutoAnimate();
   const dispatch = useAppDispatch();
   const paginationPage = useAppSelector((state) => state.pagination.pagination);

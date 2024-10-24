@@ -58,7 +58,7 @@ export const CartPage = (): JSX.Element => {
       return;
     }
 
-    await removeEmptyItems();
+    removeEmptyItems();
     await new Promise((resolve) => setTimeout(resolve, 300));
     await dispatch(submitCart());
     await dispatch(clearCart());

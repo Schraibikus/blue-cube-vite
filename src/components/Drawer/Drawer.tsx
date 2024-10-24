@@ -9,7 +9,7 @@ import styles from "./Drawer.module.scss";
 import { DebounceInput } from "react-debounce-input";
 import { setLimitTotalPrice } from "../../store/modules/items/itemsSlice";
 
-export const TemporaryDrawer = () => {
+export const Drawer = () => {
   const dispatch = useAppDispatch();
   const isOpenDrawer = useAppSelector((state) => state.modal.isOpenDrawer);
   const page = useAppSelector((state) => state.pagination.itemsPerPage);

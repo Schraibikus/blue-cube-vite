@@ -27,6 +27,7 @@ export const Pagination = ({
   };
 
   function createButtons() {
+    // функция создания кнопок
     const buttons = [];
     // Добавляем первую страницу
     buttons.push(

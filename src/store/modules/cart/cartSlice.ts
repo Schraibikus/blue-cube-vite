@@ -35,7 +35,8 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-       addToCartItems(
+    addToCartItems(
+      // добавление товара в корзину
       state,
       action: PayloadAction<{ id: Item["id"]; quantity: number }>
     ) {
@@ -63,6 +64,7 @@ const cartSlice = createSlice({
       toast.success("Товар добавлен в корзину!");
     },
     updateQuantity(
+      // изменение количества товара в корзине перед отправкой заказа
       state,
       action: PayloadAction<{ id: string; quantity: number }>
     ) {
@@ -81,6 +83,7 @@ const cartSlice = createSlice({
       }
     },
     removeItem(state, action: PayloadAction<{ id: string }>) {
+      // удаление товара из корзины
       const { id } = action.payload;
       state.cartItems = state.cartItems.filter(
         (item) => item.product.id !== id
@@ -94,6 +97,7 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getItemsCart.pending, (state) => {
+        // получение товаров в корзине
         state.isLoading = true;
         state.error = null;
       })
@@ -111,16 +115,18 @@ const cartSlice = createSlice({
         state.error = action.error.message || "Failed to fetch cartItems";
       })
       .addCase(
-        addItemCart.fulfilled,
+        addItemCart.fulfilled, // обновление состояния корзины
         (state, action: PayloadAction<CartItem[]>) => {
           state.cartItems = action.payload;
         }
       )
       .addCase(clearCart.fulfilled, (state) => {
+        // очистка корзины
         state.cartItems = [];
         state.itemsToCart = [];
       })
       .addCase(submitCart.pending, (state) => {
+        // отправка на сервер состояния корзины
         state.isLoading = true;
         state.error = null;
       })

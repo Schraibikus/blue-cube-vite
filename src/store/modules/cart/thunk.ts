@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 export const getItemsCart = createAsyncThunk("cart/getItemsCart", async () => {
   try {
     const data = await fetchItemsCart();
-    // console.log("cartItems", data);
     return data;
   } catch (error) {
     if (error instanceof AxiosError) throw toast.error(error.message);

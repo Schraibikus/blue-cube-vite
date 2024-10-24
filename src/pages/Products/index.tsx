@@ -1,1 +1,2 @@
-export { ProductsPage } from "./ProductsPage";
+export { ProductsPageWithPagination } from "./ProductsPageWithPagination";
+export { ProductsPageWithInfiniteScroll } from "./ProductsPageWithInfiniteScroll";

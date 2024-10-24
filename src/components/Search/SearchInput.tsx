@@ -4,19 +4,11 @@ import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
 import getCountWord from "../../utils/getCountWord";
-// import useDebouncedValue from "../../hooks/useDebounce";
-// import { useEffect } from "react";
 
 export const SearchInput = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.items.searchValue);
   const foundItems = useAppSelector((state) => state.items.foundItems);
-
-  // const debouncedSearch = useDebouncedValue(searchValue, 500);
-
-  // useEffect(() => {
-  //   dispatch(getSearchItems(debouncedSearch));
-  // }, [dispatch, debouncedSearch]);
 
   const filteredItems = foundItems.filter((item) =>
     item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -52,12 +44,6 @@ export const SearchInput = (): JSX.Element => {
               onClick={clearInput}
             />
           )}
-          {/* <input
-            type="text"
-            value={searchValue}
-            placeholder="Поиск..."
-            onChange={(event) => dispatch(setSearchValue(event.target.value))}
-          /> */}
           <DebounceInput
             minLength={2} // минимальная длина ввода перед тем, как будет вызвана функция handleInputChange
             debounceTimeout={500} // задержка перед тем, как будет вызвана функция handleInputChange

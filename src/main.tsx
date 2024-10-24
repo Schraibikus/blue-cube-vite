@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Provider store={store}>
-      <ToastContainer
+      <ToastContainer // библиотека для уведомлений
         position="bottom-right"
         theme="colored"
         autoClose={2000}

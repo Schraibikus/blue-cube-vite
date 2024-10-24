@@ -15,7 +15,7 @@ import { Spinner } from "../../components/Spinner";
 import { SingleProduct } from "./SingleProduct";
 import { toggleSetDrawer } from "../../store/modules/modal/modalSlice";
 
-export const ProductsPage = (): JSX.Element => {
+export const ProductsPageWithPagination = (): JSX.Element => {
   const [parent] = useAutoAnimate();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

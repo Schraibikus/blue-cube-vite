@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleSetModal } from "../../store/modules/modal/modalSlice";
 import { CartPage } from "../../pages/Cart";
 
+//молальное окно для реализации корзины
 export const ModalWindow = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.modal.isOpen);

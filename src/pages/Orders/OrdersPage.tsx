@@ -12,6 +12,7 @@ import { Pagination } from "../../components/Pagination";
 import { Spinner } from "../../components/Spinner";
 import { setPaginationPage } from "../../store/modules/pagination/paginationSlice";
 
+//страница закозов
 export const OrdersPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [parent] = useAutoAnimate();

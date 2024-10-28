@@ -5,6 +5,7 @@ import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
 import getCountWord from "../../utils/getCountWord";
 
+//поиск товаров
 export const SearchInput = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.items.searchValue);

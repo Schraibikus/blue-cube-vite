@@ -22,6 +22,7 @@ import {
 } from "../../../store/modules/cart";
 import { toggleSetModal } from "../../../store/modules/modal/modalSlice";
 
+//страница выбранного товара
 export const SelectedProductPage = (): JSX.Element => {
   const [parent] = useAutoAnimate();
   const navigate = useNavigate();

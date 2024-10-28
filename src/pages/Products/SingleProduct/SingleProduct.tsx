@@ -5,6 +5,7 @@ import styles from "./SingleProduct.module.scss";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Item } from "../../../store/modules/items/types";
 
+//карточка товара
 export const SingleProduct = ({
   id,
   title,

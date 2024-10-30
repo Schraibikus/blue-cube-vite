@@ -9,6 +9,7 @@ import styles from "./Drawer.module.scss";
 import { DebounceInput } from "react-debounce-input";
 import { setLimitTotalPrice } from "../../store/modules/items/itemsSlice";
 
+//компонент для открытия бокового меню
 export const Drawer = () => {
   const dispatch = useAppDispatch();
   const isOpenDrawer = useAppSelector((state) => state.modal.isOpenDrawer);

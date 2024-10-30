@@ -12,6 +12,7 @@ import { removeItem, updateQuantity } from "../../store/modules/cart/cartSlice";
 import { clearCart, submitCart } from "../../store/modules/cart";
 import { toggleSetModal } from "../../store/modules/modal/modalSlice";
 
+//корзина товаров
 export const CartPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

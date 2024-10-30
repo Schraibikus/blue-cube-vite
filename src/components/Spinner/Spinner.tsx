@@ -6,6 +6,7 @@ const override = {
   borderColor: "red",
 };
 
+//заставка загрузки
 export const Spinner = (): JSX.Element => {
   return (
     <div>

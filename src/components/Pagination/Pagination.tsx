@@ -5,6 +5,7 @@ import {
   nextPage,
 } from "../../store/modules/pagination/paginationSlice";
 
+//компонент для реализации пагинации
 export const Pagination = ({
   maxItems,
   maxItemToPage,

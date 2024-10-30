@@ -9,7 +9,11 @@ import styles from "./Drawer.module.scss";
 import { DebounceInput } from "react-debounce-input";
 import { setLimitTotalPrice } from "../../store/modules/items/itemsSlice";
 
+<<<<<<< HEAD
 //компонент для открытия бокового меню
+=======
+//компонент боковой панели
+>>>>>>> 4f03bcac2f04b15379c107901dca23a6d3c877b9
 export const Drawer = () => {
   const dispatch = useAppDispatch();
   const isOpenDrawer = useAppSelector((state) => state.modal.isOpenDrawer);

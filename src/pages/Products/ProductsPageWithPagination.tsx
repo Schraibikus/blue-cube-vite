@@ -15,6 +15,7 @@ import { Spinner } from "../../components/Spinner";
 import { SingleProduct } from "./SingleProduct";
 import { toggleSetDrawer } from "../../store/modules/modal/modalSlice";
 
+//страница товаров с реализованной пагинацией
 export const ProductsPageWithPagination = (): JSX.Element => {
   const [parent] = useAutoAnimate();
   const dispatch = useAppDispatch();

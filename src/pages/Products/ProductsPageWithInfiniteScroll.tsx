@@ -24,8 +24,7 @@ export const ProductsPageWithInfiniteScroll = (): JSX.Element => {
   const itemsPerPage = useMemo(() => page, [page]);
   const totalItems = useAppSelector((state) => state.items.totalItems);
 
-  // Реализация бесконечного скролла
-
+  //страница товаров с реализацией бесконечного скролла
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition =

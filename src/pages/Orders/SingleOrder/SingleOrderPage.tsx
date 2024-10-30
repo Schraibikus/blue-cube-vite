@@ -10,6 +10,7 @@ import { getItem } from "../../../store/modules/items";
 import replaceImage from "../../../utils/replaceImage";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
+//страница заказа
 export const SingleOrderPage = ({
   order,
   idx,

@@ -101,9 +101,7 @@ export const HeaderBar = (): JSX.Element => {
             />
           </svg>
           Корзина
-          {cartCount === 0 ? (
-            ""
-          ) : (
+          {cartCount === 0 ? null : (
             <span className={styles.cartCount}>({cartCount})</span>
           )}
         </button>

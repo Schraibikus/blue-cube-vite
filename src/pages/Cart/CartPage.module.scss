@@ -171,6 +171,20 @@
     padding: 24px;
     font-family: var(--font-family-base);
 
+    &_clear {
+      cursor: pointer;
+      color: var(--gray);
+      text-transform: capitalize;
+      font-size: 16px;
+      text-decoration: none;
+      align-self: end;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
     &_link {
       cursor: pointer;
       color: var(--gray);

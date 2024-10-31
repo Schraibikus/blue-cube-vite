@@ -38,6 +38,14 @@ export const Drawer = () => {
     dispatch(setLimitTotalPrice(parseInt(event.target.value)));
   };
 
+  //количество товаров на странице
+  enum PageItems {
+    TEN = 10,
+    FIFTEEN = 15,
+    TWENTY = 20,
+    THIRTY = 30,
+  }
+
   return (
     <div
       className={`${styles.overlay} ${
@@ -60,38 +68,21 @@ export const Drawer = () => {
               Количество товаров на странице
             </h2>
             <div className={styles.container__buttons}>
-              <button
-                className={`${styles.container__button} ${
-                  itemsPerPage === 10 ? styles.container__button_active : ""
-                }`}
-                onClick={() => handlePageChange(10)}
-              >
-                10
-              </button>
-              <button
-                className={`${styles.container__button} ${
-                  itemsPerPage === 15 ? styles.container__button_active : ""
-                }`}
-                onClick={() => handlePageChange(15)}
-              >
-                15
-              </button>
-              <button
-                className={`${styles.container__button} ${
-                  itemsPerPage === 20 ? styles.container__button_active : ""
-                }`}
-                onClick={() => handlePageChange(20)}
-              >
-                20
-              </button>
-              <button
-                className={`${styles.container__button} ${
-                  itemsPerPage === 30 ? styles.container__button_active : ""
-                }`}
-                onClick={() => handlePageChange(30)}
-              >
-                30
-              </button>
+              {Object.values(PageItems)
+                .filter((item) => typeof item === "number")
+                .map((item) => (
+                  <button
+                    key={item}
+                    className={`${styles.container__button} ${
+                      itemsPerPage === item
+                        ? styles.container__button_active
+                        : ""
+                    }`}
+                    onClick={() => handlePageChange(Number(item))}
+                  >
+                    {item}
+                  </button>
+                ))}
             </div>
           </div>
         )}

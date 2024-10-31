@@ -3,11 +3,17 @@ import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleSetModal } from "../../store/modules/modal/modalSlice";
 import { CartPage } from "../../pages/Cart";
+import { useEffect } from "react";
 
 //молальное окно для реализации корзины
 export const ModalWindow = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector((state) => state.modal.isOpen);
+
+  useEffect(() => {
+    dispatch(toggleSetModal({ isOpen: false }));
+  }, [dispatch]);
+
   const handleCloseModal = () => {
     dispatch(toggleSetModal({ isOpen: false }));
   };

@@ -76,6 +76,10 @@ export const CartPage = (): JSX.Element => {
     ?.flat()
     .reduce((sum, obj) => obj.product.price * obj.quantity + sum, 0);
 
+  const handleCloseModal = () => {
+    dispatch(toggleSetModal({ isOpen: false }));
+  };
+
   if (isLoading) {
     return (
       <Layout>
@@ -201,6 +205,14 @@ export const CartPage = (): JSX.Element => {
         </div>
       ) : (
         <div className={styles.cart__empty}>
+          <img
+            className={styles.cart__empty_clear}
+            src="/svg/close.svg"
+            alt="Clear"
+            width={24}
+            height={24}
+            onClick={() => handleCloseModal()}
+          />
           <Link to="/" className={styles.cart__empty_link}>
             главная
           </Link>

@@ -4,12 +4,14 @@ import { getSearchItems } from "../../store/modules/items";
 import { setSearchValue } from "../../store/modules/items/itemsSlice";
 import styles from "./Search.module.scss";
 import getCountWord from "../../utils/getCountWord";
+import { useRef } from "react";
 
 //поиск товаров
 export const SearchInput = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.items.searchValue);
   const foundItems = useAppSelector((state) => state.items.foundItems);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const filteredItems = foundItems.filter((item) =>
     item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -18,6 +20,7 @@ export const SearchInput = (): JSX.Element => {
   const handleInputChange = (event: { target: { value: string } }) => {
     dispatch(setSearchValue(event.target.value));
     dispatch(getSearchItems(event.target.value));
+    inputRef.current?.focus();
   };
 
   const clearInput = () => {
@@ -51,6 +54,7 @@ export const SearchInput = (): JSX.Element => {
             onChange={handleInputChange}
             value={searchValue}
             placeholder="Поиск..."
+            inputRef={inputRef}
           />
         </div>
       </div>
